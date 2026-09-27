@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo_modo }} - Simulador Saber 5°{% endblock %}
+
+{% block content %}
+<div class="container test-container">
+
+  <!-- Cabecera de la Prueba: Cronómetro y Título -->
+  <div class="test-header-bar">
+    <div class="test-header-info">
+      <a href="{{ url_for('index') }}" class="back-link">← Volver al Menú</a>
+      <h1 class="test-title">{{ titulo_modo }}</h1>
+    </div>
+
+    <div class="timer-card">
+      <span class="timer-icon">⏱️</span>
+      <div class="timer-display">
+        <span class="timer-label">Tiempo</span>
+        <span id="timer-text" class="timer-value">00:00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra de Progreso Dinámica -->
+  <div class="progress-section">
+    <div class="progress-info-row">
+      <span id="progress-question-indicator" class="progress-question-indicator">Pregunta 1 de {{ preguntas|length }}</span>
+      <span id="progress-percent" class="progress-percent">0% completado</span>
+    </div>
+    <div class="progress-bar-track">
+      <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+    </div>
+  </div>
+
+  <!-- Píldoras de Navegación Rápida por Pregunta -->
+  <div class="question-pills-bar">
+    <span class="pills-label">Preguntas:</span>
+    <div class="pills-container">
+      {% for p in preguntas %}
+      <button type="button" class="question-pill {% if loop.first %}active{% endif %}" data-target-index="{{ loop.index0 }}" id="pill-{{ p.id }}">
+        {{ loop.index }}
+      </button>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Formulario de Preguntas -->
+  <form id="form-simulador" action="{{ url_for('calificar') }}" method="POST">
+    <input type="hidden" name="tiempo_segundos" id="input-tiempo-segundos" value="0">
+
+    {% for p in preguntas %}
+    <div class="question-card {% if loop.first %}current-question{% else %}hidden-question{% endif %}" id="qcard-{{ loop.index0 }}" data-qid="{{ p.id }}">
+      
+      <!-- Metadatos de la Pregunta -->
+      <div class="question-meta-row">
+        <span class="area-pill" style="--pill-color: {{ areas_info[p.area].color }}; --pill-bg: {{ areas_info[p.area].color_light }};">
+          {{ areas_info[p.area].icono }} {{ p.area }}
+        </span>
+        {% if p.competencia %}
+        <span class="competencia-pill">🎯 {{ p.competencia }}</span>
+        {% endif %}
+      </div>
+
+      <!-- Contexto / Lectura / Situación -->
+      {% if p.contexto %}
+      <div class="question-context-box">
+        <div class="context-label">📖 Lee la siguiente situación con atención:</div>
+        <div class="context-body">{{ p.contexto | replace('\n', '<br>') | safe }}</div>
+      </div>
+      {% endif %}
+
+      <!-- Enunciado de la Pregunta -->
+      <div class="question-text">
+        <span class="question-number">{{ loop.index }}.</span>
+        <span class="question-statement">{{ p.pregunta }}</span>
+      </div>
+
+      <!-- Opciones de Respuesta A, B, C, D -->
+      <div class="options-grid">
+        {% for opt in p.opciones %}
+        <label class="option-label" for="opt-{{ p.id }}-{{ opt.key }}">
+          <input 
+            type="radio" 
+            name="preg_{{ p.id }}" 
+            id="opt-{{ p.id }}-{{ opt.key }}" 
+            value="{{ opt.key }}"
+            class="option-radio"
+            data-qid="{{ p.id }}"
+          >
+          <div class="option-card">
+            <span class="option-letter">{{ opt.key }}</span>
+            <span class="option-text">{{ opt.texto }}</span>
+          </div>
+        </label>
+        {% endfor %}
+      </div>
+
+    </div>
+    {% endfor %}
+
+    <!-- Barra de Botones Inferior -->
+    <div class="test-nav-controls">
+      <button type="button" id="btn-prev" class="btn btn-secondary btn-nav" disabled>
+        ⬅️ Anterior
+      </button>
+
+      <div class="status-summary" id="status-unanswered-text">
+        Respondidas: <strong id="count-answered">0</strong> de <strong>{{ preguntas|length }}</strong>
+      </div>
+
+      <button type="button" id="btn-next" class="btn btn-primary btn-nav">
+        Siguiente ➡️
+      </button>
+
+      <button type="button" id="btn-finish" class="btn btn-success btn-nav btn-finish hidden-btn">
+        🏁 Enviar Respuestas
+      </button>
+    </div>
+
+  </form>
+
+</div>
+
+<!-- Modal de Confirmación Amigable para Isaías -->
+<div id="modal-confirm" class="modal-overlay hidden-modal">
+  <div class="modal-card">
+    <div class="modal-icon">🌟</div>
+    <h3 class="modal-title">¿Listo para conocer tu resultado, Isaías?</h3>
+    <p id="modal-msg" class="modal-msg">Has respondido todas las preguntas. ¡Vamos a descubrir tu puntaje y nivel de desempeño!</p>
+    <div class="modal-actions">
+      <button type="button" id="btn-modal-cancel" class="btn btn-outline">Quiero revisar mis respuestas</button>
+      <button type="button" id="btn-modal-confirm" class="btn btn-success btn-large">¡Sí, ver mi puntaje! 🚀</button>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,682 @@
+[
+  {
+    "id": "mat_01",
+    "area": "Matemáticas",
+    "componente": "Numérico - Variacional",
+    "competencia": "Formulación y ejecución",
+    "sesion": 1,
+    "contexto": "Isaías acompaña a su mamá al supermercado de su barrio. En la sección de frutas observan la siguiente promoción: 'Bolsa de 5 manzanas por $6.000'.",
+    "pregunta": "Si la mamá de Isaías decide comprar 15 manzanas para toda la semana, ¿cuánto dinero debe pagar en total?",
+    "opciones": [
+      { "key": "A", "texto": "$12.000" },
+      { "key": "B", "texto": "$18.000" },
+      { "key": "C", "texto": "$24.000" },
+      { "key": "D", "texto": "$30.000" }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "Como 15 manzanas equivalen a 3 bolsas de 5 manzanas (15 ÷ 5 = 3), se multiplica 3 bolsas × $6.000 = $18.000."
+  },
+  {
+    "id": "mat_02",
+    "area": "Matemáticas",
+    "componente": "Geométrico - Métrico",
+    "competencia": "Razonamiento y argumentación",
+    "sesion": 1,
+    "contexto": "En la clase de educación física, el profesor pide a los estudiantes de quinto grado trotar alrededor del patio de la escuela, el cual tiene forma rectangular con 25 metros de largo y 15 metros de ancho.",
+    "pregunta": "¿Cuántos metros recorre Isaías si le da exactamente 2 vueltas completas al patio?",
+    "opciones": [
+      { "key": "A", "texto": "80 metros" },
+      { "key": "B", "texto": "160 metros" },
+      { "key": "C", "texto": "375 metros" },
+      { "key": "D", "texto": "750 metros" }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "El perímetro del patio es la suma de sus lados: 25m + 15m + 25m + 15m = 80 metros (1 vuelta). Al dar 2 vueltas completas: 80m × 2 = 160 metros."
+  },
+  {
+    "id": "mat_03",
+    "area": "Matemáticas",
+    "componente": "Numérico - Variacional",
+    "competencia": "Comunicación, representación y modelación",
+    "sesion": 1,
+    "contexto": "En la fiesta de cumpleaños del salón, se partió una torta redonda en 8 partes iguales. Los niños del curso se comieron 5 de esas partes.",
+    "pregunta": "¿Qué fracción representa la porción de torta que sobró?",
+    "opciones": [
+      { "key": "A", "texto": "3/8" },
+      { "key": "B", "texto": "5/8" },
+      { "key": "C", "texto": "3/5" },
+      { "key": "D", "texto": "8/3" }
+    ],
+    "respuesta_correcta": "A",
+    "explicacion": "La torta entera es 8/8. Si se comieron 5 partes (5/8), sobraron 8/8 - 5/8 = 3/8 de torta."
+  },
+  {
+    "id": "mat_04",
+    "area": "Matemáticas",
+    "componente": "Aleatorio (Estadística)",
+    "competencia": "Razonamiento y argumentación",
+    "sesion": 1,
+    "contexto": "El personero escolar realizó una encuesta a los 40 estudiantes de quinto grado sobre su deporte preferido. Los resultados fueron: Fútbol: 18 niños; Baloncesto: 12 niños; Patinaje: 6 niños; Natación: 4 niños.",
+    "pregunta": "De acuerdo con los datos, ¿cuál de las siguientes afirmaciones es completamente verdadera?",
+    "opciones": [
+      { "key": "A", "texto": "El patinaje es el deporte preferido por la mitad del curso." },
+      { "key": "B", "texto": "Exactamente la mitad de los estudiantes del salón prefiere fútbol o natación juntos (18 + 4 = 22)." },
+      { "key": "C", "texto": "El fútbol fue elegido por más estudiantes que la suma de patinaje y natación juntos." },
+      { "key": "D", "texto": "El baloncesto tiene el doble de preferencias que el fútbol." }
+    ],
+    "respuesta_correcta": "C",
+    "explicacion": "Patinaje (6) + Natación (4) = 10 estudiantes. El fútbol tiene 18 estudiantes, por lo tanto, el fútbol fue elegido por más niños que la suma de ambos (18 > 10)."
+  },
+  {
+    "id": "mat_05",
+    "area": "Matemáticas",
+    "componente": "Numérico - Variacional",
+    "competencia": "Formulación y ejecución",
+    "sesion": 1,
+    "contexto": "Una empresa transportadora empaca cuadernos escolares en cajas. Cada paquete tiene 12 cuadernos y en cada caja caben 20 paquetes.",
+    "pregunta": "¿Cuántos cuadernos hay en total dentro de una caja completamente llena?",
+    "opciones": [
+      { "key": "A", "texto": "32 cuadernos" },
+      { "key": "B", "texto": "120 cuadernos" },
+      { "key": "C", "texto": "240 cuadernos" },
+      { "key": "D", "texto": "480 cuadernos" }
+    ],
+    "respuesta_correcta": "C",
+    "explicacion": "Multiplicamos 20 paquetes × 12 cuadernos por paquete = 240 cuadernos en total."
+  },
+  {
+    "id": "mat_06",
+    "area": "Matemáticas",
+    "componente": "Geométrico - Métrico",
+    "competencia": "Comunicación, representación y modelación",
+    "sesion": 1,
+    "contexto": "Observa las características de las figuras geométricas planas.",
+    "pregunta": "¿Cuál de las siguientes figuras geométricas tiene exactamente 4 lados de igual longitud pero sus 4 ángulos interiores NO son ángulos rectos de 90 grados?",
+    "opciones": [
+      { "key": "A", "texto": "El cuadrado" },
+      { "key": "B", "texto": "El rectángulo" },
+      { "key": "C", "texto": "El rombo" },
+      { "key": "D", "texto": "El trapecio" }
+    ],
+    "respuesta_correcta": "C",
+    "explicacion": "El rombo tiene cuatro lados de igual medida, pero a diferencia del cuadrado, sus ángulos interiores son dos agudos y dos obtusos (no son rectos)."
+  },
+  {
+    "id": "mat_07",
+    "area": "Matemáticas",
+    "componente": "Numérico - Variacional",
+    "competencia": "Razonamiento y argumentación",
+    "sesion": 1,
+    "contexto": "En un videojuego matemático, los puntos aumentan siguiendo este patrón numérico: 4, 8, 16, 32, ___, 128.",
+    "pregunta": "¿Cuál es el número que falta en la línea para completar correctamente la secuencia?",
+    "opciones": [
+      { "key": "A", "texto": "40" },
+      { "key": "B", "texto": "48" },
+      { "key": "C", "texto": "64" },
+      { "key": "D", "texto": "96" }
+    ],
+    "respuesta_correcta": "C",
+    "explicacion": "El patrón consiste en multiplicar el número anterior por 2 (doble): 4×2=8, 8×2=16, 16×2=32, 32×2=64, 64×2=128."
+  },
+  {
+    "id": "mat_08",
+    "area": "Matemáticas",
+    "componente": "Geométrico - Métrico",
+    "competencia": "Formulación y ejecución",
+    "sesion": 1,
+    "contexto": "Isaías ayuda a construir una maqueta para la feria de la ciencia con una base cuadrada que mide 6 centímetros por cada lado.",
+    "pregunta": "¿Cuál es el área total de la base cuadrada de la maqueta?",
+    "opciones": [
+      { "key": "A", "texto": "12 cm²" },
+      { "key": "B", "texto": "24 cm²" },
+      { "key": "C", "texto": "36 cm²" },
+      { "key": "D", "texto": "48 cm²" }
+    ],
+    "respuesta_correcta": "C",
+    "explicacion": "El área de un cuadrado se calcula multiplicando lado por lado: 6 cm × 6 cm = 36 cm²."
+  },
+  {
+    "id": "mat_09",
+    "area": "Matemáticas",
+    "componente": "Numérico - Variacional",
+    "competencia": "Formulación y ejecución",
+    "sesion": 1,
+    "contexto": "En la biblioteca del colegio hay 1.500 libros. Durante el mes de agosto se prestaron 380 libros a primaria y 450 libros a bachillerato.",
+    "pregunta": "¿Cuántos libros quedaron disponibles en los estantes de la biblioteca al finalizar el mes?",
+    "opciones": [
+      { "key": "A", "texto": "670 libros" },
+      { "key": "B", "texto": "730 libros" },
+      { "key": "C", "texto": "830 libros" },
+      { "key": "D", "texto": "1.050 libros" }
+    ],
+    "respuesta_correcta": "A",
+    "explicacion": "Sumamos los libros prestados: 380 + 450 = 830 libros. Luego restamos del total: 1.500 - 830 = 670 libros disponibles."
+  },
+  {
+    "id": "mat_10",
+    "area": "Matemáticas",
+    "componente": "Aleatorio (Estadística)",
+    "competencia": "Comunicación, representación y modelación",
+    "sesion": 1,
+    "contexto": "En una bolsa opaca hay 10 balotas del mismo tamaño: 6 son rojas, 3 son verdes y 1 es azul. Isaías saca una balota con los ojos vendados.",
+    "pregunta": "¿De qué color es más probable que salga la balota elegida por Isaías?",
+    "opciones": [
+      { "key": "A", "texto": "Verde, porque es el color de la naturaleza." },
+      { "key": "B", "texto": "Azul, porque solo hay una y es especial." },
+      { "key": "C", "texto": "Roja, porque tiene la mayor cantidad de balotas en la bolsa (6 de 10)." },
+      { "key": "D", "texto": "Cualquier color tiene exactamente la misma probabilidad." }
+    ],
+    "respuesta_correcta": "C",
+    "explicacion": "La probabilidad depende de la cantidad: hay 6 rojas frente a 3 verdes y 1 azul. La mayor probabilidad es sacar una roja (6/10 o 60%)."
+  },
+  {
+    "id": "len_01",
+    "area": "Lenguaje",
+    "componente": "Semántico / Comprensión lectora",
+    "competencia": "Literal (Recuperar información explícita)",
+    "sesion": 1,
+    "contexto": "Lee con atención el siguiente texto informativo:\n\n'La palma de cera del Quindío es el árbol nacional de Colombia. Puede alcanzar hasta 60 metros de altura y vive en los bosques nublados de la cordillera Central. Sus frutos son el alimento principal de animales en peligro de extinción, como el loro orejiamarillo. Por esta razón, talar o dañar estas palmas está terminantemente prohibido por la ley colombiana.'",
+    "pregunta": "De acuerdo con el texto, ¿cuál de los siguientes animales depende directamente de los frutos de la palma de cera para alimentarse?",
+    "opciones": [
+      { "key": "A", "texto": "El cóndor de los Andes." },
+      { "key": "B", "texto": "El loro orejiamarillo." },
+      { "key": "C", "texto": "El oso de anteojos." },
+      { "key": "D", "texto": "El jaguar de la selva." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "El texto menciona de forma directa y explícita: 'Sus frutos son el alimento principal de animales en peligro de extinción, como el loro orejiamarillo'."
+  },
+  {
+    "id": "len_02",
+    "area": "Lenguaje",
+    "componente": "Pragmático / Propósito comunicativo",
+    "competencia": "Inferencial",
+    "sesion": 1,
+    "contexto": "En la entrada del laboratorio de ciencias hay un aviso con letras grandes y rojas que dice:\n'¡ATENCIÓN! Prohibido ingresar alimentos o bebidas. Usa bata blanca y gafas de protección en todo momento.'",
+    "pregunta": "¿Cuál es la intención principal del autor de este cartel?",
+    "opciones": [
+      { "key": "A", "texto": "Promover la venta de batas escolares y gafas de sol." },
+      { "key": "B", "texto": "Establecer normas de seguridad para evitar accidentes durante las prácticas." },
+      { "key": "C", "texto": "Invitar a los estudiantes a un concurso de disfraces científicos." },
+      { "key": "D", "texto": "Informar el horario de atención de los profesores de ciencias." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "El cartel tiene una función prescriptiva e informativa para garantizar la seguridad física y evitar derrames o contaminaciones en el laboratorio."
+  },
+  {
+    "id": "len_03",
+    "area": "Lenguaje",
+    "componente": "Sintáctico / Estructura del texto",
+    "competencia": "Evaluativo y crítico",
+    "sesion": 1,
+    "contexto": "Lee con atención el siguiente fragmento de una fábula:\n\n'Una hormiga trabajaba bajo el sol recolectando granos de trigo para el invierno. Mientras tanto, una cigarra descansaba a la sombra cantando alegremente y burlándose de la hormiga. Cuando llegó el frío invierno y la nieve cubrió el suelo, la cigarra no tenía nada que comer y acudió temblando a la casa de la hormiga a pedirle auxilio.'",
+    "pregunta": "¿Cuál es la enseñanza o moraleja principal que deja esta historia?",
+    "opciones": [
+      { "key": "A", "texto": "Cantar canciones es malo para la salud durante el verano." },
+      { "key": "B", "texto": "El esfuerzo y la previsión a tiempo aseguran bienestar en el futuro." },
+      { "key": "C", "texto": "Las hormigas y las cigarras deben vivir siempre en el mismo hormiguero." },
+      { "key": "D", "texto": "El invierno es la mejor estación del año para viajar." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "La fábula enseña el valor de la laboriosidad, la previsión y la responsabilidad: trabajar cuando hay tiempo para no sufrir escasez más adelante."
+  },
+  {
+    "id": "len_04",
+    "area": "Lenguaje",
+    "componente": "Semántico / Significado en contexto",
+    "competencia": "Inferencial",
+    "sesion": 1,
+    "contexto": "En la oración: 'El atleta colombiano superó con valentía todos los obstáculos de la carrera y llegó a la meta con una sonrisa radiante', la palabra 'radiante' significa que:",
+    "pregunta": "¿Qué expresa la palabra 'radiante' en el contexto de la oración?",
+    "opciones": [
+      { "key": "A", "texto": "Que tenía luz eléctrica en su rostro." },
+      { "key": "B", "texto": "Que su sonrisa demostraba una inmensa alegría y satisfacción por el triunfo." },
+      { "key": "C", "texto": "Que sentía mucho calor a causa del sol del mediodía." },
+      { "key": "D", "texto": "Que sus dientes eran de color dorado." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "En sentido figurado y contextual, 'una sonrisa radiante' denota felicidad profunda, plenitud y orgullo por el logro alcanzado."
+  },
+  {
+    "id": "len_05",
+    "area": "Lenguaje",
+    "componente": "Sintáctico / Cohesión y conectores",
+    "competencia": "Formulación y corrección de estilo",
+    "sesion": 1,
+    "contexto": "Observa el siguiente enunciado al que le falta un conector lógico:\n\n'Isaías estudió con mucha dedicación durante toda la semana, ________ obtuvo una excelente calificación en su evaluación de matemáticas.'",
+    "pregunta": "¿Cuál conector une de forma correcta y lógica las dos ideas?",
+    "opciones": [
+      { "key": "A", "texto": "sin embargo," },
+      { "key": "B", "texto": "por lo tanto," },
+      { "key": "C", "texto": "a pesar de que," },
+      { "key": "D", "texto": "en cambio," }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "'Por lo tanto' es un conector consecutivo o de causa-efecto: estudiar con dedicación genera como resultado o consecuencia una buena calificación."
+  },
+  {
+    "id": "len_06",
+    "area": "Lenguaje",
+    "componente": "Pragmático / Tipologías textuales",
+    "competencia": "Evaluativo y crítico",
+    "sesion": 1,
+    "contexto": "Imagina que lees un texto que incluye ingredientes, cantidades en gramos, pasos numerados (1, 2, 3...) y recomendaciones de tiempo de horneado.",
+    "pregunta": "¿A qué tipo de texto corresponde esta descripción?",
+    "opciones": [
+      { "key": "A", "texto": "Texto poético o lírico." },
+      { "key": "B", "texto": "Texto instructivo (una receta)." },
+      { "key": "C", "texto": "Texto dramático (obra de teatro)." },
+      { "key": "D", "texto": "Noticia periodística de sucesos." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "Los textos instructivos guían al lector paso a paso mediante indicaciones claras y secuenciales para preparar algo o realizar una actividad."
+  },
+  {
+    "id": "len_07",
+    "area": "Lenguaje",
+    "componente": "Semántico / Idea global",
+    "competencia": "Inferencial",
+    "sesion": 1,
+    "contexto": "Lee el siguiente párrafo:\n\n'Los manglares son bosques que crecen en las costas donde se mezcla el agua dulce de los ríos con el agua salada del mar. Sus fuertes raíces sumergidas funcionan como guarderías naturales para cientos de especies de peces, cangrejos y camarones. Además, protegen a los pueblos costeros frenando la fuerza destructiva de las grandes olas y los huracanes.'",
+    "pregunta": "¿Cuál es la idea principal del párrafo anterior?",
+    "opciones": [
+      { "key": "A", "texto": "Los peces son los animales más rápidos de las costas." },
+      { "key": "B", "texto": "El agua dulce de los ríos contiene muchas clases de sal." },
+      { "key": "C", "texto": "Los manglares son ecosistemas de enorme valor para la vida marina y la protección de las costas." },
+      { "key": "D", "texto": "Las grandes olas destruyen siempre los bosques de tierra adentro." }
+    ],
+    "respuesta_correcta": "C",
+    "explicacion": "Todo el párrafo se enfoca en resaltar la función protectora y ecológica de los manglares tanto para las especies marinas como para las comunidades humanas."
+  },
+  {
+    "id": "len_08",
+    "area": "Lenguaje",
+    "componente": "Sintáctico / Signos de puntuación",
+    "competencia": "Formulación y corrección de estilo",
+    "sesion": 1,
+    "contexto": "Observa cómo se usan los signos de interrogación y admiración en la lengua castellana.",
+    "pregunta": "¿Cuál de las siguientes oraciones está escrita con la puntuación y ortografía correcta según las normas del español?",
+    "opciones": [
+      { "key": "A", "texto": "¡Hola Isaías, a qué horas empieza el partido!" },
+      { "key": "B", "texto": "¿Cómo te sentiste resolviendo las preguntas de la prueba?" },
+      { "key": "C", "texto": "Como te sentiste resolviendo las preguntas de la prueba?" },
+      { "key": "D", "texto": "¡¿Cuándo vamos a ir al parque de diversiones." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "En español, las preguntas directas deben abrir con '¿' y cerrar con '?', y las palabras interrogativas como 'Cómo' llevan tilde."
+  },
+  {
+    "id": "len_09",
+    "area": "Lenguaje",
+    "componente": "Semántico / Relaciones sinonímicas",
+    "competencia": "Literal",
+    "sesion": 1,
+    "contexto": "En la biblioteca del colegio, el profesor dice: 'Para comprender a fondo la lectura, es indispensable prestar atención y reflexionar con calma.'",
+    "pregunta": "¿Cuál de las siguientes palabras puede reemplazar a 'indispensable' sin cambiar el sentido de la frase?",
+    "opciones": [
+      { "key": "A", "texto": "Innecesario" },
+      { "key": "B", "texto": "Opcional" },
+      { "key": "C", "texto": "Fundamental" },
+      { "key": "D", "texto": "Secundario" }
+    ],
+    "respuesta_correcta": "C",
+    "explicacion": "'Indispensable' y 'fundamental' son sinónimos que indican que algo es estrictamente necesario o imprescindible."
+  },
+  {
+    "id": "len_10",
+    "area": "Lenguaje",
+    "componente": "Pragmático / Voz y narrador",
+    "competencia": "Evaluativo y crítico",
+    "sesion": 1,
+    "contexto": "'Aquella mañana me desperté más temprano que de costumbre. Me puse mi uniforme escolar y sentí mariposas en el estómago porque hoy era el primer día de quinto grado.'",
+    "pregunta": "¿Desde qué punto de vista está narrado este fragmento?",
+    "opciones": [
+      { "key": "A", "texto": "En primera persona (un personaje cuenta lo que él mismo vivió)." },
+      { "key": "B", "texto": "En tercera persona (alguien que observa desde lejos sin participar)." },
+      { "key": "C", "texto": "En segunda persona como si fuera una carta dirigida al lector." },
+      { "key": "D", "texto": "No tiene narrador porque es una poesía." }
+    ],
+    "respuesta_correcta": "A",
+    "explicacion": "Las formas verbales 'me desperté', 'me puse' y 'sentí' indican que la historia está relatada en primera persona gramatical (yo)."
+  },
+  {
+    "id": "cie_01",
+    "area": "Ciencias Naturales",
+    "componente": "Entorno vivo",
+    "competencia": "Uso comprensivo del conocimiento científico",
+    "sesion": 2,
+    "contexto": "En el bosque andino conviven árboles de roble, conejos de monte, zorros y hongos descomponedores en el suelo.",
+    "pregunta": "¿Qué ocurriría en este ecosistema si desaparecieran por completo todos los organismos descomponedores (como hongos y bacterias)?",
+    "opciones": [
+      { "key": "A", "texto": "Los árboles crecerían mucho más rápido porque no tendrían competencia." },
+      { "key": "B", "texto": "La materia orgánica muerta (hojas secas y restos) se acumularía y los nutrientes no volverían al suelo." },
+      { "key": "C", "texto": "Los conejos se transformarían inmediatamente en animales carnívoros." },
+      { "key": "D", "texto": "Aumentaría la cantidad de agua dulce en los ríos del bosque." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "Los descomponedores son vitales para reciclar la materia orgánica: transforman los restos de seres vivos en nutrientes minerales que fertilizan el suelo para las plantas."
+  },
+  {
+    "id": "cie_02",
+    "area": "Ciencias Naturales",
+    "componente": "Entorno físico (Materia y Energía)",
+    "competencia": "Explicación de fenómenos",
+    "sesion": 2,
+    "contexto": "Isaías coloca una olla con agua en la estufa. A medida que el agua se calienta y llega a hervir, observa burbujas y vapor saliendo hacia el aire.",
+    "pregunta": "¿Cuál cambio de estado de la materia se produce cuando el agua líquida pasa a vapor de agua por aumento de temperatura?",
+    "opciones": [
+      { "key": "A", "texto": "Solidificación" },
+      { "key": "B", "texto": "Vaporización (ebullición)" },
+      { "key": "C", "texto": "Condensación" },
+      { "key": "D", "texto": "Sublimación inversa" }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "La vaporización o ebullición es el cambio físico en el cual una sustancia pasa del estado líquido al gaseoso al absorber calor."
+  },
+  {
+    "id": "cie_03",
+    "area": "Ciencias Naturales",
+    "componente": "Entorno vivo (Cuerpo Humano)",
+    "competencia": "Uso comprensivo del conocimiento científico",
+    "sesion": 2,
+    "contexto": "Cuando corremos a toda velocidad en el patio de recreo, sentimos que nuestro corazón late con mayor rapidez y respiramos más agitados.",
+    "pregunta": "¿Por qué el corazón y los pulmones trabajan más rápido durante la actividad física intensa?",
+    "opciones": [
+      { "key": "A", "texto": "Para enfriar los huesos del cuerpo con aire fresco." },
+      { "key": "B", "texto": "Para enviar mayor cantidad de oxígeno y nutrientes a los músculos a través de la sangre." },
+      { "key": "C", "texto": "Para almacenar grasa en los pulmones." },
+      { "key": "D", "texto": "Para evitar que el estómago haga la digestión." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "Durante el ejercicio, los músculos demandan más energía, por lo que el sistema circulatorio y respiratorio aumentan su ritmo para oxigenar y nutrir las células musculares."
+  },
+  {
+    "id": "cie_04",
+    "area": "Ciencias Naturales",
+    "componente": "Entorno físico (Fuerza y Movimiento)",
+    "competencia": "Indagación",
+    "sesion": 2,
+    "contexto": "Isaías empuja un carrito de juguete con la misma fuerza sobre dos superficies distintas: primero sobre el piso liso de baldosas de la sala, y luego sobre el pasto alto del jardín.",
+    "pregunta": "¿En cuál de las dos superficies el carrito recorrerá mayor distancia antes de detenerse y por qué?",
+    "opciones": [
+      { "key": "A", "texto": "En el pasto, porque las hojas lo empujan hacia adelante." },
+      { "key": "B", "texto": "En la baldosa lisa, porque hay menor fuerza de fricción o rozamiento que frene las ruedas." },
+      { "key": "C", "texto": "En ambas superficies llegará exactamente a la misma distancia." },
+      { "key": "D", "texto": "En ninguna, porque los carritos solo ruedan si tienen motor eléctrico." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "La fuerza de rozamiento (fricción) es menor en superficies lisas como la baldosa, permitiendo que el objeto conserve su movimiento durante más tiempo."
+  },
+  {
+    "id": "cie_05",
+    "area": "Ciencias Naturales",
+    "componente": "Ciencia, Tecnología y Sociedad",
+    "competencia": "Explicación de fenómenos",
+    "sesion": 2,
+    "contexto": "En muchos municipios de Colombia se promueve la separación de residuos sólidos en canecas de colores: blanca (aprovechables limpios), verde (orgánicos) y negra (no aprovechables).",
+    "pregunta": "¿Cuál de los siguientes materiales debe depositarse en la caneca blanca para ser reciclado?",
+    "opciones": [
+      { "key": "A", "texto": "Cáscaras de plátano y restos de comida del almuerzo." },
+      { "key": "B", "texto": "Papel higiénico y servilletas usadas y sucias." },
+      { "key": "C", "texto": "Botellas de plástico secas, cajas de cartón limpias y latas de aluminio." },
+      { "key": "D", "texto": "Pilas gastadas y baterías con químicos peligrosos." }
+    ],
+    "respuesta_correcta": "C",
+    "explicacion": "Según el código nacional de colores para la separación de residuos en Colombia, en la caneca blanca van los residuos aprovechables limpios como plástico, vidrio, cartón y metales."
+  },
+  {
+    "id": "cie_06",
+    "area": "Ciencias Naturales",
+    "componente": "Entorno vivo (Adaptación biológica)",
+    "competencia": "Uso comprensivo del conocimiento científico",
+    "sesion": 2,
+    "contexto": "Los osos polares habitan en regiones con temperaturas bajo cero y tienen un pelaje grueso de color blanco y una capa gruesa de grasa debajo de su piel.",
+    "pregunta": "¿Cuál es la función principal de la capa de grasa en el cuerpo de estos animales?",
+    "opciones": [
+      { "key": "A", "texto": "Ayudarles a flotar únicamente mientras duermen." },
+      { "key": "B", "texto": "Actuar como aislante térmico para mantener el calor corporal y evitar congelarse." },
+      { "key": "C", "texto": "Permitirles cambiar de color cuando se sienten en peligro." },
+      { "key": "D", "texto": "Hacer que pesen menos para poder correr más rápido sobre el hielo." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "La gruesa capa de tejido adiposo (grasa) actúa como un aislante térmico fundamental para conservar el calor interno ante el frío polar extremo."
+  },
+  {
+    "id": "cie_07",
+    "area": "Ciencias Naturales",
+    "componente": "Entorno físico (Mezclas y Separación)",
+    "competencia": "Indagación",
+    "sesion": 2,
+    "contexto": "Por accidente, a un cocinero se le cayeron clips metálicos de hierro dentro de un recipiente lleno de harina de trigo.",
+    "pregunta": "¿Cuál es el método físico más rápido y efectivo para separar los clips de hierro de la harina sin dañar el alimento?",
+    "opciones": [
+      { "key": "A", "texto": "Agregar agua para que los clips floten en la superficie." },
+      { "key": "B", "texto": "Calentar la mezcla en una olla hasta que los clips se derritan." },
+      { "key": "C", "texto": "Utilizar un imán potente para atraer los clips aprovechando sus propiedades magnéticas (imantación)." },
+      { "key": "D", "texto": "Dejar el recipiente al sol durante varios días." }
+    ],
+    "respuesta_correcta": "C",
+    "explicacion": "La imantación o separación magnética permite retirar objetos con propiedades ferromagnéticas (hierro) de sustancias no magnéticas como la harina de manera limpia."
+  },
+  {
+    "id": "cie_08",
+    "area": "Ciencias Naturales",
+    "componente": "Entorno vivo (Fotosíntesis)",
+    "competencia": "Explicación de fenómenos",
+    "sesion": 2,
+    "contexto": "Las plantas verdes terrestres realizan el proceso de la fotosíntesis en sus hojas utilizando luz solar, agua y dióxido de carbono.",
+    "pregunta": "¿Cuál gas liberan las plantas a la atmósfera como producto de la fotosíntesis, el cual es indispensable para la respiración de los seres humanos y animales?",
+    "opciones": [
+      { "key": "A", "texto": "Oxígeno (O₂)" },
+      { "key": "B", "texto": "Dióxido de carbono (CO₂)" },
+      { "key": "C", "texto": "Nitrógeno (N₂)" },
+      { "key": "D", "texto": "Gas metano" }
+    ],
+    "respuesta_correcta": "A",
+    "explicacion": "Durante la fotosíntesis, las plantas absorben dióxido de carbono y liberan oxígeno al aire, gas esencial para la respiración aeróbica animal."
+  },
+  {
+    "id": "cie_09",
+    "area": "Ciencias Naturales",
+    "componente": "Ciencia, Tecnología y Sociedad",
+    "competencia": "Indagación",
+    "sesion": 2,
+    "contexto": "Un grupo de estudiantes quiere saber qué tipo de luz favorece más el crecimiento de una planta de frijol. Para ello colocan tres plantas iguales con la misma cantidad de tierra y agua, pero una a la luz solar directa, otra bajo luz de bombillo artificial y la tercera en total oscuridad.",
+    "pregunta": "En este experimento científico escolar, ¿cuál es la variable que los estudiantes están modificando a propósito para observar los resultados?",
+    "opciones": [
+      { "key": "A", "texto": "El tipo de tierra utilizada en las macetas." },
+      { "key": "B", "texto": "El tipo de luz a la que se expone cada planta." },
+      { "key": "C", "texto": "La cantidad de agua que riegan a diario." },
+      { "key": "D", "texto": "El tamaño de las macetas elegidas." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "La variable independiente o modificada a propósito es el tipo de iluminación, mientras que la tierra, el agua y las macetas se mantienen como variables de control constantes."
+  },
+  {
+    "id": "cie_10",
+    "area": "Ciencias Naturales",
+    "componente": "Entorno físico (Electricidad y Circuitos)",
+    "competencia": "Uso comprensivo del conocimiento científico",
+    "sesion": 2,
+    "contexto": "En la clase de tecnología, Isaías conecta una pila, cables de cobre y un bombillo pequeño formando un circuito cerrado. El bombillo se enciende de inmediato.",
+    "pregunta": "¿Por qué se enciende el bombillo?",
+    "opciones": [
+      { "key": "A", "texto": "Porque la pila absorbe todo el aire del circuito." },
+      { "key": "B", "texto": "Porque la corriente eléctrica puede fluir de manera continua a través de los conductores cerrando el circuito." },
+      { "key": "C", "texto": "Porque los cables de cobre son imanes que calientan el vidrio." },
+      { "key": "D", "texto": "Porque la luz solar entró a través de los cables." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "Para que un bombillo encienda, el circuito debe estar completamente cerrado y conectado a una fuente de energía (pila) a través de materiales conductores que permitan el flujo de electrones."
+  },
+  {
+    "id": "ciu_01",
+    "area": "Competencias Ciudadanas",
+    "componente": "Convivencia y Paz",
+    "competencia": "Argumentación y resolución de conflictos",
+    "sesion": 2,
+    "contexto": "Durante un juego en el recreo, Camilo empuja sin intención a Juan David y este se raspa la rodilla. Juan David se levanta muy furioso y levanta el puño para golpearlo.",
+    "pregunta": "¿Cuál es la recomendación más constructiva y pacífica que sus compañeros de curso pueden darle a Juan David en ese momento?",
+    "opciones": [
+      { "key": "A", "texto": "Que le devuelva el golpe dos veces más fuerte para que respete." },
+      { "key": "B", "texto": "Que respire con calma, escuche la disculpa de Camilo y busquen al docente o mediador de paz si necesita curación." },
+      { "key": "C", "texto": "Que llame a sus amigos de otros salones para armar una pelea grupal en la salida." },
+      { "key": "D", "texto": "Que se quede callado y guarde rencor para vengarse en el futuro." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "La autorregulación emocional, el diálogo y la mediación escolar son herramientas de convivencia pacífica fundamentales para resolver accidentes sin recurrir a la violencia."
+  },
+  {
+    "id": "ciu_02",
+    "area": "Competencias Ciudadanas",
+    "componente": "Participación y Responsabilidad Democrática",
+    "competencia": "Pensamiento social y principios constitucionales",
+    "sesion": 2,
+    "contexto": "En el colegio se convoca a elecciones para elegir el Consejo Estudiantil. En un salón, un grupo de niños dice: 'Para qué votar si da igual quién gane, mejor nos quedamos jugando videojuegos'.",
+    "pregunta": "¿Por qué es importante que todos los estudiantes ejerzan su derecho y deber al voto de forma responsable?",
+    "opciones": [
+      { "key": "A", "texto": "Porque quien no vota es castigado con expulsión inmediata del colegio." },
+      { "key": "B", "texto": "Porque el voto permite participar en las decisiones colectivas y elegir a quien mejor represente los intereses de todos los estudiantes." },
+      { "key": "C", "texto": "Porque así ganan puntos extra en la materia de educación física." },
+      { "key": "D", "texto": "Porque solo los estudiantes que votan pueden comer en la cafetería." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "El voto es un mecanismo democrático fundamental para que los ciudadanos (y estudiantes en el gobierno escolar) expresen su voz y elijan libremente a sus líderes."
+  },
+  {
+    "id": "ciu_03",
+    "area": "Competencias Ciudadanas",
+    "componente": "Pluralidad, Identidad y Valoración de las Diferencias",
+    "competencia": "Multiperspectivismo",
+    "sesion": 2,
+    "contexto": "A quinto grado llega un nuevo estudiante que proviene de una comunidad indígena del Cauca. Algunos compañeros se ríen de su acento al hablar y de sus tradiciones familiares.",
+    "pregunta": "¿Cuál actitud demuestra respeto por la diversidad y cumple con los derechos humanos establecidos en la Constitución colombiana?",
+    "opciones": [
+      { "key": "A", "texto": "Exigirle que cambie de inmediato su forma de vestir y olvide su lengua materna." },
+      { "key": "B", "texto": "Ignorarlo en los trabajos grupales para no tener dificultades." },
+      { "key": "C", "texto": "Acogerlo cordialmente, valorar sus conocimientos ancestrales y aprender de su riqueza cultural." },
+      { "key": "D", "texto": "Decirle que solo puede hablar cuando esté completamente solo." }
+    ],
+    "respuesta_correcta": "C",
+    "explicacion": "Colombia es una nación pluriétnica y multicultural. Reconocer y valorar la riqueza de los pueblos indígenas fomenta la empatía y la no discriminación."
+  },
+  {
+    "id": "ciu_04",
+    "area": "Competencias Ciudadanas",
+    "componente": "Convivencia y Paz (Cuidado de lo público)",
+    "competencia": "Pensamiento social",
+    "sesion": 2,
+    "contexto": "Un estudiante raya con marcador permanente los pupitres nuevos del aula escolar diciendo: 'Como estos pupitres no son de mi casa sino del colegio público, no me importa cuidarlos'.",
+    "pregunta": "¿Por qué la afirmación de este estudiante es equivocada?",
+    "opciones": [
+      { "key": "A", "texto": "Porque los bienes públicos pertenecen a toda la comunidad y su cuidado beneficia a las futuras generaciones de estudiantes." },
+      { "key": "B", "texto": "Porque los pupitres deben rayarse únicamente con pintura de agua." },
+      { "key": "C", "texto": "Porque los profesores son los únicos que pueden pintar los pupitres de azul." },
+      { "key": "D", "texto": "Porque solo deben cuidarse los pupitres que están en la parte trasera del salón." }
+    ],
+    "respuesta_correcta": "A",
+    "explicacion": "Los bienes públicos se construyen con los recursos de todos los ciudadanos; cuidarlos es un deber cívico indispensable para disfrutar de espacios dignos de aprendizaje."
+  },
+  {
+    "id": "ciu_05",
+    "area": "Competencias Ciudadanas",
+    "componente": "Convivencia y Paz (Acoso escolar / Bullying)",
+    "competencia": "Argumentación y toma de decisiones éticas",
+    "sesion": 2,
+    "contexto": "En el salón, un grupo de niños crea un grupo de WhatsApp y publica fotos editadas de una compañera para burlarse de su apariencia física. Laura se entera de esto.",
+    "pregunta": "¿Cuál es la acción ética y responsable que debe realizar Laura frente a esta situación de ciberacoso?",
+    "opciones": [
+      { "key": "A", "texto": "Reenviar las fotos a todos sus contactos para que nadie se pierda la burla." },
+      { "key": "B", "texto": "Quedarse callada para no ganarse problemas con los niños del grupo." },
+      { "key": "C", "texto": "Apoyar a su compañera, rechazar el maltrato y poner en conocimiento inmediato a sus padres o docentes de la institución." },
+      { "key": "D", "texto": "Crear otro grupo para insultar a los autores de las fotos con peores palabras." }
+    ],
+    "respuesta_correcta": "C",
+    "explicacion": "No ser cómplice pasivo del acoso, apoyar a la víctima y acudir a adultos de confianza permite detener situaciones que dañan la dignidad y salud mental de los niños."
+  },
+  {
+    "id": "ciu_06",
+    "area": "Competencias Ciudadanas",
+    "componente": "Participación y Responsabilidad Democrática",
+    "competencia": "Pensamiento social (Derechos del niño)",
+    "sesion": 2,
+    "contexto": "En un barrio, un niño de 10 años es obligado a trabajar todo el día vendiendo dulces en los buses y sus padres no lo matriculan en la escuela primaria.",
+    "pregunta": "¿Qué derecho fundamental del niño consagrado en las leyes colombianas y tratados internacionales se está vulnerando en esta situación?",
+    "opciones": [
+      { "key": "A", "texto": "El derecho a tener un teléfono celular de última generación." },
+      { "key": "B", "texto": "El derecho fundamental a la educación, al juego, a la recreación y a la protección contra el trabajo infantil." },
+      { "key": "C", "texto": "El derecho a viajar a otros países durante las vacaciones de junio." },
+      { "key": "D", "texto": "El derecho a no hacer aseo en su habitación." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "El Código de la Infancia y la Adolescencia y la Constitución protegen a los niños del trabajo infantil que les impida educarse, jugar y desarrollarse sanamente."
+  },
+  {
+    "id": "ciu_07",
+    "area": "Competencias Ciudadanas",
+    "componente": "Convivencia y Paz",
+    "competencia": "Multiperspectivismo",
+    "sesion": 2,
+    "contexto": "El personero escolar propone que los viernes no haya uniforme para que todos vayan en ropa particular. Los estudiantes están felices, pero los padres de familia expresan preocupación porque afirman que aumentaría el gasto en ropa de marca y las comparaciones entre familias con diferentes recursos económicos.",
+    "pregunta": "¿Qué demuestra el desacuerdo entre los estudiantes y los padres de familia?",
+    "opciones": [
+      { "key": "A", "texto": "Que una misma propuesta puede tener ventajas para un grupo (libertad de vestir) y dificultades para otro (preocupación por costos y equidad)." },
+      { "key": "B", "texto": "Que los padres de familia nunca quieren que sus hijos vayan al colegio." },
+      { "key": "C", "texto": "Que el personero escolar no tiene permitido hablar con los profesores." },
+      { "key": "D", "texto": "Que todos los estudiantes tienen exactamente la misma cantidad de dinero." }
+    ],
+    "respuesta_correcta": "A",
+    "explicacion": "En las pruebas de Competencias Ciudadanas se evalúa el multiperspectivismo: comprender que distintas personas tienen intereses y puntos de vista legítimos y diferentes sobre una misma decisión."
+  },
+  {
+    "id": "ciu_08",
+    "area": "Competencias Ciudadanas",
+    "componente": "Convivencia y Paz (Normas de convivencia)",
+    "competencia": "Pensamiento social",
+    "sesion": 2,
+    "contexto": "En la biblioteca pública del barrio hay un letrero que dice: 'Por favor, mantén silencio o habla en voz muy baja'. Un grupo entra hablando a gritos con música en un parlante.",
+    "pregunta": "¿Por qué las normas de convivencia en espacios públicos como las bibliotecas son necesarias para la comunidad?",
+    "opciones": [
+      { "key": "A", "texto": "Porque a los encargados de la biblioteca no les gusta la música moderna." },
+      { "key": "B", "texto": "Porque garantizan un ambiente de concentración, estudio y respeto mutuo para todos los usuarios que acuden a leer." },
+      { "key": "C", "texto": "Porque los libros se dañan si escuchan sonidos fuertes." },
+      { "key": "D", "texto": "Porque las normas solo aplican para los niños y no para los adultos." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "Las normas de convivencia en espacios comunes protegen los derechos de todos los miembros de la comunidad, asegurando que el espacio cumpla su propósito de estudio y tranquilidad."
+  },
+  {
+    "id": "ciu_09",
+    "area": "Competencias Ciudadanas",
+    "componente": "Pluralidad, Identidad y Valoración de las Diferencias",
+    "competencia": "Argumentación (Detección de prejuicios)",
+    "sesion": 2,
+    "contexto": "En el recreo, unos estudiantes están armando el equipo escolar de ajedrez. Un estudiante dice: 'No dejemos entrar a Mariana porque las niñas no son buenas para los juegos de estrategia y lógica'.",
+    "pregunta": "¿Qué tipo de afirmación está expresando ese estudiante?",
+    "opciones": [
+      { "key": "A", "texto": "Una afirmación científica comprobada en laboratorios." },
+      { "key": "B", "texto": "Un estereotipo y prejuicio injusto de género que no tiene ningún sustento real." },
+      { "key": "C", "texto": "Una regla oficial del reglamento internacional de ajedrez." },
+      { "key": "D", "texto": "Un consejo de seguridad para cuidar a las niñas." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "La capacidad intelectual, lógica y estratégica no depende del género. Asumir que las niñas no son buenas para el ajedrez es un prejuicio y estereotipo discriminatorio."
+  },
+  {
+    "id": "ciu_10",
+    "area": "Competencias Ciudadanas",
+    "componente": "Convivencia y Paz",
+    "competencia": "Pensamiento social y mediación",
+    "sesion": 2,
+    "contexto": "En el manual de convivencia escolar se establece la figura del 'Comité de Convivencia Escolar'.",
+    "pregunta": "¿Cuál es la función principal de este comité en la escuela?",
+    "opciones": [
+      { "key": "A", "texto": "Organizar las fiestas de fin de año y vender rifas." },
+      { "key": "B", "texto": "Promover el respeto, prevenir el acoso escolar y ayudar a mediar conflictos de forma justa y restaurativa." },
+      { "key": "C", "texto": "Elegir las marcas de cuadernos que los niños deben comprar obligatoriamente." },
+      { "key": "D", "texto": "Calificar los exámenes de matemáticas de los cursos superiores." }
+    ],
+    "respuesta_correcta": "B",
+    "explicacion": "En Colombia (según la Ley 1620 de Convivencia Escolar), el Comité de Convivencia Escolar vela por la armonía, la mitigación de la violencia escolar y el fomento de los derechos humanos y la paz."
+  }
+]

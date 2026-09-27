@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}Boletín Oficial Saber 5° - Isaías Tangarife{% endblock %}
+
+{% block content %}
+<canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+<div class="container results-container">
+
+  <!-- Encabezado Institucional ICFES -->
+  <div class="official-icfes-header">
+    <div class="icfes-logo-group">
+      <span class="colombia-flag">🇨🇴</span>
+      <div>
+        <h2 class="icfes-inst-title">INSTITUTO COLOMBIANO PARA LA EVALUACIÓN DE LA EDUCACIÓN (ICFES)</h2>
+        <p class="icfes-inst-sub">Boletín Oficial Individual de Resultados | Evaluación Saber 5° Educación Básica</p>
+      </div>
+    </div>
+    <div class="icfes-reg-group">
+      <div class="reg-line"><strong>Registro:</strong> <code>{{ res.codigo_registro }}</code></div>
+      <div class="reg-line"><strong>Fecha:</strong> {{ res.fecha_examen }}</div>
+    </div>
+  </div>
+
+  <!-- Tarjeta Principal de Celebración y Puntaje Global -->
+  <div class="results-hero-card">
+    <div class="results-hero-badge">🎉 ¡Prueba Evaluada Oficialmente!</div>
+    <h1 class="results-title">¡Gran trabajo, <span class="highlight-name">{{ res.estudiante }}!</span></h1>
+    <p class="results-subtitle">Este reporte refleja el resultado alcanzado en tu simulacro oficial tipo Saber 5°.</p>
+
+    <div class="results-summary-grid">
+      <!-- Puntaje Global ICFES (100 a 500) -->
+      <div class="global-score-card">
+        <span class="score-label">Puntaje Global ICFES</span>
+        <div class="score-number-row">
+          <span class="score-value">{{ res.puntaje_global }}</span>
+          <span class="score-max">/ 500</span>
+        </div>
+        <div class="level-pill {{ res.nivel_global.badge_class }}">
+          <span class="level-pill-icon">{{ res.nivel_global.icono }}</span>
+          <span class="level-pill-text">{{ res.nivel_global.rango }}: {{ res.nivel_global.nivel }}</span>
+        </div>
+
+        <!-- Comparación con la Media Nacional -->
+        <div class="media-comparison-tag {% if res.diferencia_global_media >= 0 %}media-above{% else %}media-below{% endif %}">
+          {% if res.diferencia_global_media >= 0 %}
+          🚀 <strong>+{{ res.diferencia_global_media }} pts</strong> por encima de la Media Nacional ({{ res.media_nacional }} pts)
+          {% else %}
+          📍 A {{ res.diferencia_global_media|abs }} pts de alcanzar la Media Nacional ({{ res.media_nacional }} pts)
+          {% endif %}
+        </div>
+
+        <p class="level-feedback-msg">{{ res.nivel_global.mensaje }}</p>
+      </div>
+
+      <!-- Métricas Clave -->
+      <div class="quick-stats-card">
+        <div class="quick-stat-item">
+          <span class="stat-icon">🎯</span>
+          <div class="stat-content">
+            <span class="stat-number">{{ res.total_correctas }} de {{ res.total_preguntas }}</span>
+            <span class="stat-desc">Preguntas acertadas ({{ ((res.total_correctas / res.total_preguntas) * 100)|round|int }}%)</span>
+          </div>
+        </div>
+
+        <div class="quick-stat-item">
+          <span class="stat-icon">⏱️</span>
+          <div class="stat-content">
+            <span class="stat-number">{{ res.tiempo_formateado }}</span>
+            <span class="stat-desc">Tiempo de resolución</span>
+          </div>
+        </div>
+
+        <div class="quick-stat-item">
+          <span class="stat-icon">🏅</span>
+          <div class="stat-content">
+            <span class="stat-number">
+              {% if res.puntaje_global >= 450 %}Medalla de Oro (Nivel 4) 🥇
+              {% elif res.puntaje_global >= 350 %}Medalla de Plata (Nivel 3) 🥈
+              {% else %}Medalla al Esfuerzo (Nivel 2) 🥉
+              {% endif %}
+            </span>
+            <span class="stat-desc">Estado: {{ res.nivel_global.estado_meta }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desempeño por Áreas (Barras Visuales y Niveles) -->
+  <section class="areas-results-section">
+    <div class="section-header">
+      <h2 class="section-title">Resultados por Área Oficial del ICFES</h2>
+      <p class="section-subtitle">Escala oficial de 100 a 500 puntos por cada una de las 4 pruebas</p>
+    </div>
+
+    <div class="areas-results-grid">
+      {% for item in res.reporte_areas %}
+      <div class="area-result-card" style="--card-border: {{ item.color }};">
+        <div class="area-result-header">
+          <div class="area-title-group">
+            <span class="area-res-icon">{{ item.icono }}</span>
+            <h3 class="area-res-name">{{ item.area }}</h3>
+          </div>
+          <span class="area-res-score" style="color: {{ item.color }};">{{ item.puntaje }} <small>/ 500</small></span>
+        </div>
+
+        <!-- Barra de escala ICFES con referencia a 300 pts -->
+        <div class="icfes-bar-wrapper">
+          <div class="icfes-bar-track">
+            {% set bar_pct = ((item.puntaje - 100) / 400 * 100) %}
+            <div class="icfes-bar-fill" style="width: {{ bar_pct }}%; background-color: {{ item.color }};"></div>
+            <!-- Línea de Media Nacional (300 pts = 50% de la barra) -->
+            <div class="icfes-national-line" title="Media Nacional ICFES: 300 puntos"></div>
+          </div>
+          <div class="icfes-bar-labels">
+            <span>100 (Insuficiente)</span>
+            <span>250 (Mínimo)</span>
+            <span class="lbl-media">⭐ 300 (Media Nal.)</span>
+            <span>350 (Satisfactorio)</span>
+            <span>500 (Avanzado)</span>
+          </div>
+        </div>
+
+        <div class="area-result-footer">
+          <div class="area-level-tag {{ item.nivel.badge_class }}">
+            {{ item.nivel.icono }} {{ item.nivel.nivel }} ({{ item.nivel.rango }})
+          </div>
+          <span class="area-correct-count">
+            ✅ {{ item.correctas }} de {{ item.total }} aciertos ({{ item.porcentaje }}%)
+          </span>
+        </div>
+        <p class="area-motivational-msg">{{ item.nivel.mensaje }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Desglose Pedagógico por Componentes Evaluados -->
+  {% if res.reporte_componentes %}
+  <section class="components-section">
+    <div class="section-header">
+      <h2 class="section-title">📊 Desempeño por Componentes de Aprendizaje</h2>
+      <p class="section-subtitle">Rendimiento en las temáticas específicas evaluadas en el cuadernillo</p>
+    </div>
+
+    <div class="components-grid">
+      {% for comp in res.reporte_componentes %}
+      <div class="component-card">
+        <div class="comp-header">
+          <span class="comp-area-tag">{{ comp.area }}</span>
+          <span class="comp-pct-badge {% if comp.porcentaje >= 75 %}comp-high{% elif comp.porcentaje >= 50 %}comp-med{% else %}comp-low{% endif %}">
+            {{ comp.porcentaje }}% de Acierto
+          </span>
+        </div>
+        <h4 class="comp-name">{{ comp.componente }}</h4>
+        <div class="comp-stats-line">
+          {{ comp.correctas }} correctas de {{ comp.total }} preguntas
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Revisión Pedagógica Pregunta por Pregunta -->
+  <section class="review-section">
+    <div class="section-header">
+      <h2 class="section-title">💡 Análisis Detallado Pregunta a Pregunta</h2>
+      <p class="section-subtitle">Repasa con Isaías cada situación para consolidar los conocimientos para octubre</p>
+    </div>
+
+    <div class="review-list">
+      {% for q in res.detalle_preguntas %}
+      <div class="review-card {% if q.es_correcta %}review-correct{% else %}review-incorrect{% endif %}">
+        <div class="review-header">
+          <div class="review-badges">
+            <span class="review-num">Pregunta {{ loop.index }}</span>
+            <span class="review-area-tag">{{ q.area }}</span>
+            {% if q.componente %}
+            <span class="review-comp-tag">{{ q.componente }}</span>
+            {% endif %}
+          </div>
+          <div class="review-status">
+            {% if q.es_correcta %}
+            <span class="status-badge status-badge-ok">🎉 ¡Respuesta Correcta!</span>
+            {% else %}
+            <span class="status-badge status-badge-err">🌱 Para Reforzar</span>
+            {% endif %}
+          </div>
+        </div>
+
+        {% if q.contexto %}
+        <div class="review-context">
+          <strong>Contexto:</strong> {{ q.contexto }}
+        </div>
+        {% endif %}
+
+        <div class="review-statement">
+          <strong>Pregunta:</strong> {{ q.pregunta }}
+        </div>
+
+        <!-- Comparación de Respuestas -->
+        <div class="review-options-summary">
+          <div class="review-opt-box your-choice {% if q.es_correcta %}opt-correct{% else %}opt-wrong{% endif %}">
+            <span class="choice-title">Respuesta de Isaías:</span>
+            <span class="choice-text">
+              {% if q.respuesta_elegida %}
+                <strong>Opción {{ q.respuesta_elegida }}</strong>
+              {% else %}
+                <em>(Pregunta en blanco)</em>
+              {% endif %}
+            </span>
+          </div>
+
+          <div class="review-opt-box correct-choice">
+            <span class="choice-title">Respuesta Correcta Oficial:</span>
+            <span class="choice-text"><strong>Opción {{ q.respuesta_correcta }}</strong></span>
+          </div>
+        </div>
+
+        <!-- Explicación Pedagógica -->
+        {% if q.explicacion %}
+        <div class="review-explanation">
+          <div class="explanation-title">💡 ¿Por qué es esta la respuesta correcta?</div>
+          <div class="explanation-text">{{ q.explicacion }}</div>
+        </div>
+        {% endif %}
+
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Botones de Acción Final -->
+  <div class="results-actions-bar">
+    <a href="{{ url_for('index') }}" class="btn btn-primary btn-large">
+      🔄 Presentar Otra Prueba o Sesión
+    </a>
+    <button type="button" class="btn btn-secondary btn-large" onclick="window.print()">
+      🖨️ Imprimir / Guardar Boletín Oficial (PDF)
+    </button>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts_extra %}
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    if (typeof dispararConfetti === 'function') {
+      dispararConfetti();
+    }
+  });
+</script>
+{% endblock %}

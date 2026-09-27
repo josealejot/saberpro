@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}Simulador Oficial ICFES Saber 5° - Isaías Tangarife{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <!-- Hero Banner de Bienvenida -->
+  <section class="hero-card">
+    <div class="hero-text">
+      <div class="hero-badge">🇨🇴 Sistema Oficial ICFES Saber 5° | Evaluar para Avanzar</div>
+      <h1 class="hero-title">¡Preparación Oficial, <span class="highlight-name">Isaías!</span></h1>
+      <p class="hero-desc">
+        Este simulador recrea fielmente las condiciones reales, cantidad de preguntas y estructura de competencias de las <strong>Pruebas Saber 5° del ICFES</strong> que presentarás en octubre.
+      </p>
+      
+      <div class="hero-actions">
+        <a href="{{ url_for('protocolo', modo='completo') }}" class="btn btn-primary btn-large btn-bounce">
+          🎯 Iniciar Simulacro General Oficial ({{ total_preguntas }} Preguntas)
+        </a>
+      </div>
+    </div>
+    <div class="hero-mascot">
+      <div class="mascot-bubble">¡Rumbo a la excelencia! 🏆</div>
+      <div class="mascot-character">🚀</div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE SESIONES OFICIALES DEL ICFES -->
+  <section class="sessions-section">
+    <div class="section-header">
+      <h2 class="section-title">📅 Simulacros por Sesiones Reales del ICFES</h2>
+      <p class="section-subtitle">El examen oficial en Colombia se divide en 2 sesiones continuas de evaluación</p>
+    </div>
+
+    <div class="sessions-grid">
+      <!-- Tarjeta Sesión 1 -->
+      <div class="session-card session-1-card">
+        <div class="session-badge">Jornada 1</div>
+        <h3 class="session-title">Sesión 1: Razonamiento y Comprensión</h3>
+        <p class="session-desc">Evalúa las áreas básicas de pensamiento lógico y comunicativo:</p>
+        <ul class="session-areas-list">
+          <li>📐 <strong>Matemáticas:</strong> 10 preguntas (Problemas, Geometría, Estadística).</li>
+          <li>📚 <strong>Lenguaje:</strong> 10 preguntas (Lectura crítica, Textos informativos y literarios).</li>
+        </ul>
+        <div class="session-meta">
+          <span>📝 <strong>{{ total_sesion_1 }} preguntas</strong></span>
+          <span>⏱️ Tiempo sugerido: 45 min</span>
+        </div>
+        <a href="{{ url_for('protocolo', sesion=1) }}" class="btn btn-primary session-btn">
+          Iniciar Sesión 1 Oficial &rarr;
+        </a>
+      </div>
+
+      <!-- Tarjeta Sesión 2 -->
+      <div class="session-card session-2-card">
+        <div class="session-badge session-badge-alt">Jornada 2</div>
+        <h3 class="session-title">Sesión 2: Naturaleza y Convivencia</h3>
+        <p class="session-desc">Evalúa la comprensión del entorno científico y el pensamiento social:</p>
+        <ul class="session-areas-list">
+          <li>🔬 <strong>Ciencias Naturales:</strong> 10 preguntas (Entorno vivo, materia, energía y sociedad).</li>
+          <li>🤝 <strong>Competencias Ciudadanas:</strong> 10 preguntas (Paz, convivencia y democracia).</li>
+        </ul>
+        <div class="session-meta">
+          <span>📝 <strong>{{ total_sesion_2 }} preguntas</strong></span>
+          <span>⏱️ Tiempo sugerido: 45 min</span>
+        </div>
+        <a href="{{ url_for('protocolo', sesion=2) }}" class="btn btn-success session-btn">
+          Iniciar Sesión 2 Oficial &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Módulos de Entrenamiento Individual por Área -->
+  <section class="areas-section">
+    <div class="section-header">
+      <h2 class="section-title">Entrenamiento Focalizado por Área (10 Preguntas c/u)</h2>
+      <p class="section-subtitle">Ideal para reforzar y afianzar competencias específicas antes de la prueba general</p>
+    </div>
+
+    <div class="areas-grid">
+      {% for area, info in areas_info.items() %}
+      <div class="area-card" style="--area-color: {{ info.color }}; --area-light: {{ info.color_light }};">
+        <div class="area-card-header">
+          <span class="area-card-icon">{{ info.icono }}</span>
+          <span class="area-card-count">{{ conteos[area] }} preguntas</span>
+        </div>
+        <h3 class="area-card-title">{{ area }}</h3>
+        <p class="area-card-desc">{{ info.descripcion }}</p>
+
+        <div class="area-components-tags">
+          {% for comp in info.componentes %}
+          <span class="mini-comp-tag">{{ comp }}</span>
+          {% endfor %}
+        </div>
+
+        <a href="{{ url_for('protocolo', area=area) }}" class="btn btn-outline area-card-btn">
+          Entrenar {{ area }} &rarr;
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Escala Oficial y Niveles ICFES -->
+  <section class="info-levels-card">
+    <h3 class="levels-title">¿Cómo califica el ICFES en Grado 5°?</h3>
+    <p class="levels-subtitle">
+      La calificación oficial opera en una escala de <strong>100 a 500 puntos</strong> con una <strong>media nacional de referencia de {{ media_nacional }} puntos</strong>:
+    </p>
+
+    <div class="levels-grid">
+      <div class="level-box level-avanzado">
+        <div class="level-badge">Nivel 4</div>
+        <div class="level-icon">🏆</div>
+        <h4>Avanzado</h4>
+        <span class="level-range">450 - 500 pts</span>
+        <p>Dominio sobresaliente y ejemplar de todos los aprendizajes y estándares del MEN.</p>
+      </div>
+
+      <div class="level-box level-satisfactorio">
+        <div class="level-badge">Nivel 3</div>
+        <div class="level-icon">⭐</div>
+        <h4>Satisfactorio</h4>
+        <span class="level-range">350 - 449 pts</span>
+        <p>Cumple con éxito y solidez las competencias clave esperadas para su grado escolar.</p>
+      </div>
+
+      <div class="level-box level-minimo">
+        <div class="level-badge">Nivel 2</div>
+        <div class="level-icon">🌱</div>
+        <h4>Mínimo</h4>
+        <span class="level-range">250 - 349 pts</span>
+        <p>Alcanza los conceptos elementales requeridos para continuar su trayectoria educativa.</p>
+      </div>
+
+      <div class="level-box level-insuficiente">
+        <div class="level-badge">Nivel 1</div>
+        <div class="level-icon">💪</div>
+        <h4>Insuficiente</h4>
+        <span class="level-range">100 - 249 pts</span>
+        <p>Evidencia dificultades en los conceptos básicos y requiere refuerzo pedagógico.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

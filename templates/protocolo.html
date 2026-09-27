@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Protocolo e Instrucciones Oficiales ICFES - Saber 5°{% endblock %}
+
+{% block content %}
+<div class="container protocol-container">
+
+  <div class="protocol-card">
+    <div class="protocol-header">
+      <div class="icfes-official-badge">🇨🇴 Instituto Colombiano para la Evaluación de la Educación (ICFES)</div>
+      <h1 class="protocol-title">Protocolo e Instrucciones de la Prueba Saber 5°</h1>
+      <p class="protocol-subtitle">Evaluación censal nacional de competencias para la educación básica primaria</p>
+    </div>
+
+    <!-- Ficha del Estudiante -->
+    <div class="student-id-banner">
+      <div class="id-item">
+        <span class="id-label">Estudiante:</span>
+        <strong class="id-value">Isaías Tangarife</strong>
+      </div>
+      <div class="id-item">
+        <span class="id-label">Grado:</span>
+        <strong class="id-value">5° de Primaria</strong>
+      </div>
+      <div class="id-item">
+        <span class="id-label">Modalidad:</span>
+        <strong class="id-value">
+          {% if sesion_val == '1' %}Sesión 1 (Matemáticas y Lenguaje)
+          {% elif sesion_val == '2' %}Sesión 2 (Ciencias y Ciudadanas)
+          {% elif area_val %}Módulo Focalizado: {{ area_val }}
+          {% else %}Simulacro General Completo (4 Áreas)
+          {% endif %}
+        </strong>
+      </div>
+    </div>
+
+    <!-- Reglas y Recomendaciones Oficiales del ICFES -->
+    <div class="protocol-rules-grid">
+      <div class="rule-box">
+        <span class="rule-icon">📝</span>
+        <h3>1. Preguntas de Selección Múltiple</h3>
+        <p>Cada pregunta presenta una situación, un problema o una lectura y cuatro opciones de respuesta (A, B, C, D). <strong>Solo una es la opción correcta</strong>.</p>
+      </div>
+
+      <div class="rule-box">
+        <span class="rule-icon">⏱️</span>
+        <h3>2. Administración del Tiempo</h3>
+        <p>La prueba cuenta con un temporizador amigable. Te recomendamos leer con calma y no quedarte mucho tiempo en una pregunta difícil; puedes avanzar y regresar a ella después.</p>
+      </div>
+
+      <div class="rule-box">
+        <span class="rule-icon">🚫</span>
+        <h3>3. Sin Calculadoras ni Ayudas Externas</h3>
+        <p>En las Pruebas Saber del ICFES no se permite el uso de calculadoras, celulares ni notas. Debes confiar en tus conocimientos y tu capacidad de razonamiento.</p>
+      </div>
+
+      <div class="rule-box">
+        <span class="rule-icon">🎯</span>
+        <h3>4. No Dejes Respuestas en Blanco</h3>
+        <p>El sistema de calificación del ICFES evalúa todas las respuestas. Revisa siempre que el medidor de preguntas marque que respondiste todas antes de entregar.</p>
+      </div>
+    </div>
+
+    <!-- Compromiso Ético y Botón de Inicio -->
+    <div class="protocol-cta-box">
+      <div class="pledge-text">
+        <span class="pledge-check">✨</span>
+        <span>"Declaro que responderé esta prueba de manera honesta, concentrada y dando lo mejor de mis capacidades."</span>
+      </div>
+
+      {% if sesion_val %}
+      <a href="{{ url_for('simulador', sesion=sesion_val) }}" class="btn btn-primary btn-large btn-bounce">
+        🚀 Romper el Sello del Cuadernillo y Comenzar
+      </a>
+      {% elif area_val %}
+      <a href="{{ url_for('simulador', area=area_val) }}" class="btn btn-primary btn-large btn-bounce">
+        🚀 Iniciar Entrenamiento en {{ area_val }}
+      </a>
+      {% else %}
+      <a href="{{ url_for('simulador') }}" class="btn btn-primary btn-large btn-bounce">
+        🚀 Romper el Sello e Iniciar Simulacro Completo
+      </a>
+      {% endif %}
+
+      <div class="protocol-back">
+        <a href="{{ url_for('index') }}" class="back-link">← Regresar a la selección de pruebas</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
