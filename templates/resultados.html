@@ -7,91 +7,175 @@
 
 <div class="container results-container">
 
-  <!-- Encabezado Institucional ICFES -->
+  <!-- Encabezado Institucional ICFES y MEN Colombia -->
   <div class="official-icfes-header">
     <div class="icfes-logo-group">
       <span class="colombia-flag">🇨🇴</span>
       <div>
         <h2 class="icfes-inst-title">INSTITUTO COLOMBIANO PARA LA EVALUACIÓN DE LA EDUCACIÓN (ICFES)</h2>
-        <p class="icfes-inst-sub">Boletín Oficial Individual de Resultados | Evaluación Saber 5° Educación Básica</p>
+        <p class="icfes-inst-sub">Ministerio de Educación Nacional de Colombia (MEN) | Evaluación Saber 5° Educación Básica</p>
       </div>
     </div>
     <div class="icfes-reg-group">
       <div class="reg-line"><strong>Registro:</strong> <code>{{ res.codigo_registro }}</code></div>
       <div class="reg-line"><strong>Fecha:</strong> {{ res.fecha_examen }}</div>
+      <div class="reg-line"><strong>Prueba:</strong> {{ res.titulo_modo }}</div>
     </div>
   </div>
 
-  <!-- Tarjeta Principal de Celebración y Puntaje Global -->
-  <div class="results-hero-card">
-    <div class="results-hero-badge">🎉 ¡Prueba Evaluada Oficialmente!</div>
-    <h1 class="results-title">¡Gran trabajo, <span class="highlight-name">{{ res.estudiante }}!</span></h1>
-    <p class="results-subtitle">Este reporte refleja el resultado alcanzado en tu simulacro oficial tipo Saber 5°.</p>
+  <!-- ====================================================================
+       APARTADO OFICIAL DE RESULTADO Y APROBACIÓN SEGÚN EL MEN (DECRETO 1290)
+       ==================================================================== -->
+  {% if res.aprobado %}
+  <div class="status-approval-card status-approved">
+    <div class="status-badges-group">
+      <span class="badge-men-official badge-men-approved">✅ PRUEBA APROBADA (GANASTE EL TEST)</span>
+      <span class="badge-men-scale {{ res.evaluacion_men.badge_class }}">MEN: {{ res.evaluacion_men.escala_men }}</span>
+      <span class="badge-men-scale {{ res.nivel_global.badge_class }}">ICFES: {{ res.nivel_global.rango }} ({{ res.nivel_global.nivel }})</span>
+    </div>
 
-    <div class="results-summary-grid">
-      <!-- Puntaje Global ICFES (100 a 500) -->
-      <div class="global-score-card">
-        <span class="score-label">Puntaje Global ICFES</span>
-        <div class="score-number-row">
-          <span class="score-value">{{ res.puntaje_global }}</span>
-          <span class="score-max">/ 500</span>
-        </div>
-        <div class="level-pill {{ res.nivel_global.badge_class }}">
-          <span class="level-pill-icon">{{ res.nivel_global.icono }}</span>
-          <span class="level-pill-text">{{ res.nivel_global.rango }}: {{ res.nivel_global.nivel }}</span>
-        </div>
-
-        <!-- Comparación con la Media Nacional -->
-        <div class="media-comparison-tag {% if res.diferencia_global_media >= 0 %}media-above{% else %}media-below{% endif %}">
-          {% if res.diferencia_global_media >= 0 %}
-          🚀 <strong>+{{ res.diferencia_global_media }} pts</strong> por encima de la Media Nacional ({{ res.media_nacional }} pts)
-          {% else %}
-          📍 A {{ res.diferencia_global_media|abs }} pts de alcanzar la Media Nacional ({{ res.media_nacional }} pts)
-          {% endif %}
-        </div>
-
-        <p class="level-feedback-msg">{{ res.nivel_global.mensaje }}</p>
+    <div class="status-approval-header">
+      <div>
+        <h1 class="status-approval-title">¡Felicitaciones, <span class="highlight-name">{{ res.estudiante }}!</span> 🎉</h1>
+        <p class="status-approval-desc">
+          Has <strong>APROBADO con éxito</strong> este simulacro oficial, superando el porcentaje mínimo del <strong>{{ res.evaluacion_men.porcentaje_minimo_exigido }}%</strong> (250 puntos ICFES) establecido por el <strong>Ministerio de Educación Nacional de Colombia (MEN - Decreto 1290 de 2009)</strong>.
+        </p>
       </div>
+      <div class="status-approval-actions">
+        <a href="{{ res.url_reintento }}" class="btn btn-repeat">
+          🔄 Repetir Test
+        </a>
+      </div>
+    </div>
 
-      <!-- Métricas Clave -->
-      <div class="quick-stats-card">
-        <div class="quick-stat-item">
-          <span class="stat-icon">🎯</span>
-          <div class="stat-content">
-            <span class="stat-number">{{ res.total_correctas }} de {{ res.total_preguntas }}</span>
-            <span class="stat-desc">Preguntas acertadas ({{ ((res.total_correctas / res.total_preguntas) * 100)|round|int }}%)</span>
-          </div>
+    <div class="status-score-pills">
+      <div class="score-pill-item">
+        <span class="score-pill-lbl">Puntaje ICFES</span>
+        <span class="score-pill-val" style="color: #0284c7;">{{ res.puntaje_global }} <small style="font-size: 0.9rem; color: #94a3b8;">/ 500</small></span>
+      </div>
+      <div class="score-pill-item">
+        <span class="score-pill-lbl">% Aciertos (MEN)</span>
+        <span class="score-pill-val" style="color: #16a34a;">{{ res.porcentaje_global }}% <small style="font-size: 0.8rem; color: #64748b;">(Mínimo: 60%)</small></span>
+      </div>
+      <div class="score-pill-item">
+        <span class="score-pill-lbl">Preguntas Acertadas</span>
+        <span class="score-pill-val" style="color: #16a34a;">{{ res.total_correctas }} de {{ res.total_preguntas }}</span>
+      </div>
+      <div class="score-pill-item">
+        <span class="score-pill-lbl">Fallos / En Blanco</span>
+        <span class="score-pill-val" style="color: {% if res.total_incorrectas > 0 %}#ea580c{% else %}#16a34a{% endif %};">
+          {{ res.total_incorrectas }}
+        </span>
+      </div>
+      <div class="score-pill-item">
+        <span class="score-pill-lbl">Tiempo de Solución</span>
+        <span class="score-pill-val" style="color: #64748b;">{{ res.tiempo_formateado }}</span>
+      </div>
+    </div>
+
+    <!-- Sub-apartado de Felicitación con Refuerzo de Falencias (Requerimiento especial) -->
+    {% if res.total_incorrectas > 0 %}
+    <div class="falencias-callout-card">
+      <div class="falencias-info">
+        <span class="falencias-icon">💡</span>
+        <div>
+          <h3 class="falencias-title">Refuerza tus Falencias: Tuviste {{ res.total_incorrectas }} pregunta(s) para mejorar</h3>
+          <p class="falencias-desc">
+            Aunque aprobaste con satisfacción, tuviste <strong>{{ res.total_incorrectas }} fallo(s) o preguntas sin responder</strong>. Revisa las explicaciones pedagógicas de cada una para alcanzar el 100% en las pruebas reales de octubre.
+          </p>
         </div>
-
-        <div class="quick-stat-item">
-          <span class="stat-icon">⏱️</span>
-          <div class="stat-content">
-            <span class="stat-number">{{ res.tiempo_formateado }}</span>
-            <span class="stat-desc">Tiempo de resolución</span>
-          </div>
-        </div>
-
-        <div class="quick-stat-item">
-          <span class="stat-icon">🏅</span>
-          <div class="stat-content">
-            <span class="stat-number">
-              {% if res.puntaje_global >= 450 %}Medalla de Oro (Nivel 4) 🥇
-              {% elif res.puntaje_global >= 350 %}Medalla de Plata (Nivel 3) 🥈
-              {% else %}Medalla al Esfuerzo (Nivel 2) 🥉
-              {% endif %}
-            </span>
-            <span class="stat-desc">Estado: {{ res.nivel_global.estado_meta }}</span>
-          </div>
+      </div>
+      <button type="button" class="btn btn-outline" onclick="filtrarPreguntas('errors')">
+        🔍 Ver mis {{ res.total_incorrectas }} fallos a reforzar &darr;
+      </button>
+    </div>
+    {% else %}
+    <div class="falencias-callout-card all-correct">
+      <div class="falencias-info">
+        <span class="falencias-icon">🏆</span>
+        <div>
+          <h3 class="falencias-title" style="color: #15803d;">¡Puntaje Perfecto! 100% de Aciertos</h3>
+          <p class="falencias-desc">
+            Isaías, no tuviste ningún error en esta prueba. ¡Has demostrado un dominio sobresaliente y ejemplar de todos los componentes evaluados!
+          </p>
         </div>
       </div>
     </div>
+    {% endif %}
+
   </div>
+
+  {% else %}
+
+  <!-- TARJETA CUANDO NO APROBÓ LA PRUEBA (REQUIERE REFUERZO SEGÚN EL MEN) -->
+  <div class="status-approval-card status-rejected">
+    <div class="status-badges-group">
+      <span class="badge-men-official badge-men-rejected">⚠️ PRUEBA NO APROBADA (REQUIERE REFUERZO)</span>
+      <span class="badge-men-scale {{ res.evaluacion_men.badge_class }}">MEN: {{ res.evaluacion_men.escala_men }}</span>
+      <span class="badge-men-scale {{ res.nivel_global.badge_class }}">ICFES: {{ res.nivel_global.rango }} ({{ res.nivel_global.nivel }})</span>
+    </div>
+
+    <div class="status-approval-header">
+      <div>
+        <h1 class="status-approval-title">Ánimo, <span class="highlight-name">{{ res.estudiante }}</span>. ¡Esta prueba es para aprender! 🌱</h1>
+        <p class="status-approval-desc">
+          De acuerdo con los criterios del <strong>Ministerio de Educación Nacional de Colombia (MEN - Decreto 1290 de 2009)</strong>, para aprobar la prueba básica se requiere al menos un <strong>{{ res.evaluacion_men.porcentaje_minimo_exigido }}% de aciertos</strong> (250 puntos ICFES). Tu resultado fue de <strong>{{ res.porcentaje_global }}%</strong> ({{ res.puntaje_global }} puntos). ¡No te desanimes! El objetivo de los simulacros es identificar falencias a tiempo para corregirlas.
+        </p>
+      </div>
+      <div class="status-approval-actions">
+        <a href="{{ res.url_reintento }}" class="btn btn-repeat">
+          🔄 Repetir Test Ahora
+        </a>
+      </div>
+    </div>
+
+    <div class="status-score-pills">
+      <div class="score-pill-item">
+        <span class="score-pill-lbl">Puntaje Obtenido</span>
+        <span class="score-pill-val" style="color: #dc2626;">{{ res.puntaje_global }} <small style="font-size: 0.9rem; color: #94a3b8;">/ 500</small></span>
+      </div>
+      <div class="score-pill-item">
+        <span class="score-pill-lbl">% Obtenido (MEN)</span>
+        <span class="score-pill-val" style="color: #dc2626;">{{ res.porcentaje_global }}% <small style="font-size: 0.8rem; color: #64748b;">(Exigido: 60%)</small></span>
+      </div>
+      <div class="score-pill-item">
+        <span class="score-pill-lbl">Aciertos Logrados</span>
+        <span class="score-pill-val" style="color: #16a34a;">{{ res.total_correctas }} de {{ res.total_preguntas }}</span>
+      </div>
+      <div class="score-pill-item">
+        <span class="score-pill-lbl">Preguntas que Sacó Malas</span>
+        <span class="score-pill-val" style="color: #dc2626;">{{ res.total_incorrectas }}</span>
+      </div>
+      <div class="score-pill-item">
+        <span class="score-pill-lbl">Tiempo de Solución</span>
+        <span class="score-pill-val" style="color: #64748b;">{{ res.tiempo_formateado }}</span>
+      </div>
+    </div>
+
+    <!-- Apartado Plan de Refuerzo -->
+    <div class="falencias-callout-card">
+      <div class="falencias-info">
+        <span class="falencias-icon">🎯</span>
+        <div>
+          <h3 class="falencias-title">Plan de Superación: Revisa las {{ res.total_incorrectas }} preguntas donde fallaste</h3>
+          <p class="falencias-desc">
+            Abajo te mostramos exactamente en qué preguntas te equivocaste, cuál era la opción correcta oficial y la explicación explicada paso a paso. Léelas atentamente y luego pulsa en <strong>'Repetir Test'</strong> para ganarlo.
+          </p>
+        </div>
+      </div>
+      <button type="button" class="btn btn-outline" onclick="filtrarPreguntas('errors')">
+        🔍 Ver mis {{ res.total_incorrectas }} preguntas malas &darr;
+      </button>
+    </div>
+
+  </div>
+  {% endif %}
 
   <!-- Desempeño por Áreas (Barras Visuales y Niveles) -->
   <section class="areas-results-section">
     <div class="section-header">
       <h2 class="section-title">Resultados por Área Oficial del ICFES</h2>
-      <p class="section-subtitle">Escala oficial de 100 a 500 puntos por cada una de las 4 pruebas</p>
+      <p class="section-subtitle">Escala oficial de 100 a 500 puntos (Media Nacional: 300 pts | Umbral Aprobatorio MEN: 250 pts)</p>
     </div>
 
     <div class="areas-results-grid">
@@ -115,7 +199,7 @@
           </div>
           <div class="icfes-bar-labels">
             <span>100 (Insuficiente)</span>
-            <span>250 (Mínimo)</span>
+            <span>250 (Aprobado MEN)</span>
             <span class="lbl-media">⭐ 300 (Media Nal.)</span>
             <span>350 (Satisfactorio)</span>
             <span>500 (Avanzado)</span>
@@ -163,11 +247,29 @@
   </section>
   {% endif %}
 
-  <!-- Revisión Pedagógica Pregunta por Pregunta -->
-  <section class="review-section">
+  <!-- ====================================================================
+       REVISIÓN PEDAGÓGICA PREGUNTA POR PREGUNTA (CON ENFOQUE EN FALENCIAS)
+       ==================================================================== -->
+  <section class="review-section" id="seccion-revision">
     <div class="section-header">
       <h2 class="section-title">💡 Análisis Detallado Pregunta a Pregunta</h2>
-      <p class="section-subtitle">Repasa con Isaías cada situación para consolidar los conocimientos para octubre</p>
+      <p class="section-subtitle">Revisa en qué falló Isaías y la justificación de la respuesta correcta oficial</p>
+    </div>
+
+    <!-- Barra de Filtros Interactivos -->
+    <div class="review-filters-bar">
+      <span class="review-filters-title">Filtrar visualización:</span>
+      <div class="review-filter-buttons">
+        <button type="button" class="review-filter-btn active" data-filter="all">
+          📋 Todas las preguntas ({{ res.total_preguntas }})
+        </button>
+        <button type="button" class="review-filter-btn filter-errors" data-filter="errors">
+          ❌ Preguntas que sacó malas ({{ res.total_incorrectas }})
+        </button>
+        <button type="button" class="review-filter-btn filter-correct" data-filter="correct">
+          ✅ Preguntas correctas ({{ res.total_correctas }})
+        </button>
+      </div>
     </div>
 
     <div class="review-list">
@@ -184,8 +286,10 @@
           <div class="review-status">
             {% if q.es_correcta %}
             <span class="status-badge status-badge-ok">🎉 ¡Respuesta Correcta!</span>
+            {% elif q.sin_responder %}
+            <span class="status-badge status-badge-unanswered">⚠️ No Respondida (En Blanco)</span>
             {% else %}
-            <span class="status-badge status-badge-err">🌱 Para Reforzar</span>
+            <span class="status-badge status-badge-err">❌ Fallo - Para Reforzar</span>
             {% endif %}
           </div>
         </div>
@@ -202,27 +306,31 @@
 
         <!-- Comparación de Respuestas -->
         <div class="review-options-summary">
-          <div class="review-opt-box your-choice {% if q.es_correcta %}opt-correct{% else %}opt-wrong{% endif %}">
+          <div class="review-opt-box your-choice {% if q.es_correcta %}opt-correct{% elif q.sin_responder %}opt-unanswered{% else %}opt-wrong{% endif %}">
             <span class="choice-title">Respuesta de Isaías:</span>
             <span class="choice-text">
-              {% if q.respuesta_elegida %}
-                <strong>Opción {{ q.respuesta_elegida }}</strong>
+              {% if q.sin_responder %}
+                <strong>⚠️ Sin responder (Dejada en blanco)</strong>
               {% else %}
-                <em>(Pregunta en blanco)</em>
+                <strong>Opción {{ q.respuesta_elegida }}:</strong>
+                <div class="choice-detail-text">{{ q.texto_elegida }}</div>
               {% endif %}
             </span>
           </div>
 
           <div class="review-opt-box correct-choice">
             <span class="choice-title">Respuesta Correcta Oficial:</span>
-            <span class="choice-text"><strong>Opción {{ q.respuesta_correcta }}</strong></span>
+            <span class="choice-text">
+              <strong>Opción {{ q.respuesta_correcta }}:</strong>
+              <div class="choice-detail-text">{{ q.texto_correcta }}</div>
+            </span>
           </div>
         </div>
 
         <!-- Explicación Pedagógica -->
         {% if q.explicacion %}
         <div class="review-explanation">
-          <div class="explanation-title">💡 ¿Por qué es esta la respuesta correcta?</div>
+          <div class="explanation-title">💡 ¿Por qué es esta la respuesta correcta y cómo se resuelve?</div>
           <div class="explanation-text">{{ q.explicacion }}</div>
         </div>
         {% endif %}
@@ -232,10 +340,13 @@
     </div>
   </section>
 
-  <!-- Botones de Acción Final -->
+  <!-- Botones de Acción Final con botón Repetir Test -->
   <div class="results-actions-bar">
-    <a href="{{ url_for('index') }}" class="btn btn-primary btn-large">
-      🔄 Presentar Otra Prueba o Sesión
+    <a href="{{ res.url_reintento }}" class="btn btn-repeat btn-large">
+      🔄 Repetir este Test
+    </a>
+    <a href="{{ url_for('index') }}" class="btn btn-outline btn-large">
+      🏠 Presentar Otra Prueba o Sesión
     </a>
     <button type="button" class="btn btn-secondary btn-large" onclick="window.print()">
       🖨️ Imprimir / Guardar Boletín Oficial (PDF)
@@ -248,9 +359,11 @@
 {% block scripts_extra %}
 <script>
   window.addEventListener('DOMContentLoaded', () => {
+    {% if res.aprobado %}
     if (typeof dispararConfetti === 'function') {
       dispararConfetti();
     }
+    {% endif %}
   });
 </script>
 {% endblock %}

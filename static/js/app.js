@@ -5,6 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initSimulador();
+  initResultados();
 });
 
 function initSimulador() {
@@ -28,6 +29,7 @@ function initSimulador() {
   const btnPrev = document.getElementById('btn-prev');
   const btnNext = document.getElementById('btn-next');
   const btnFinish = document.getElementById('btn-finish');
+  const btnFinishQuick = document.getElementById('btn-finish-quick');
   const questionPills = document.querySelectorAll('.question-pill');
 
   // Modal
@@ -139,32 +141,91 @@ function initSimulador() {
   });
 
   // 4. Modal de Confirmación Amigable
-  btnFinish.addEventListener('click', () => {
-    const answeredCount = parseInt(countAnsweredEl.textContent, 10) || 0;
+  function abrirModalConfirmacion() {
+    const answeredCount = parseInt(countAnsweredEl ? countAnsweredEl.textContent : '0', 10) || 0;
     const missing = totalQuestions - answeredCount;
 
     if (missing > 0) {
-      modalMsg.innerHTML = `Isaías, tienes <strong>${missing} ${missing === 1 ? 'pregunta' : 'preguntas'} sin responder</strong>.<br>¿Deseas revisarlas o prefieres entregar la prueba así?`;
-      btnModalConfirm.textContent = 'Entregar de todas formas 🚀';
+      modalMsg.innerHTML = `Isaías, tienes <strong>${missing} ${missing === 1 ? 'pregunta' : 'preguntas'} sin responder</strong> de un total de <strong>${totalQuestions}</strong>.<br>¿Deseas revisarlas o prefieres entregar la prueba así?`;
+      btnModalConfirm.textContent = 'Entregar y Calificar de todas formas 🚀';
     } else {
-      modalMsg.innerHTML = `¡Fantástico, Isaías! Respondiste las <strong>${totalQuestions} preguntas</strong>.<br>¿Listo para calcular tu puntaje oficial ICFES?`;
-      btnModalConfirm.textContent = '¡Sí, calcular mi puntaje! 🏆';
+      modalMsg.innerHTML = `¡Fantástico, Isaías! Respondiste las <strong>${totalQuestions} preguntas</strong>.<br>¿Listo para calcular tu puntaje oficial del MEN y del ICFES?`;
+      btnModalConfirm.textContent = '¡Sí, calcular mi puntaje y resultado! 🏆';
     }
 
-    modalConfirm.classList.remove('hidden-modal');
-  });
+    if (modalConfirm) modalConfirm.classList.remove('hidden-modal');
+  }
 
-  btnModalCancel.addEventListener('click', () => {
-    modalConfirm.classList.add('hidden-modal');
-  });
+  if (btnFinish) {
+    btnFinish.addEventListener('click', abrirModalConfirmacion);
+  }
 
-  btnModalConfirm.addEventListener('click', () => {
-    clearInterval(timerInterval);
-    formSimulador.submit();
-  });
+  if (btnFinishQuick) {
+    btnFinishQuick.addEventListener('click', abrirModalConfirmacion);
+  }
+
+  if (btnModalCancel) {
+    btnModalCancel.addEventListener('click', () => {
+      modalConfirm.classList.add('hidden-modal');
+    });
+  }
+
+  if (btnModalConfirm) {
+    btnModalConfirm.addEventListener('click', () => {
+      clearInterval(timerInterval);
+      formSimulador.submit();
+    });
+  }
 
   // Iniciar en la primera pregunta
   showQuestion(0);
+}
+
+// ====================================================================
+// GESTIÓN INTERACTIVA DE RESULTADOS Y FILTRO DE FALENCIAS
+// ====================================================================
+function initResultados() {
+  const filterBtns = document.querySelectorAll('.review-filter-btn');
+  const reviewCards = document.querySelectorAll('.review-card');
+  if (!filterBtns.length || !reviewCards.length) return;
+
+  function aplicarFiltro(tipo) {
+    filterBtns.forEach(btn => {
+      if (btn.getAttribute('data-filter') === tipo) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    reviewCards.forEach(card => {
+      const isCorrect = card.classList.contains('review-correct');
+      const isIncorrect = card.classList.contains('review-incorrect');
+
+      if (tipo === 'all') {
+        card.style.display = '';
+      } else if (tipo === 'errors') {
+        card.style.display = isIncorrect ? '' : 'none';
+      } else if (tipo === 'correct') {
+        card.style.display = isCorrect ? '' : 'none';
+      }
+    });
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tipo = btn.getAttribute('data-filter');
+      aplicarFiltro(tipo);
+    });
+  });
+
+  window.filtrarPreguntas = function(tipo) {
+    aplicarFiltro(tipo);
+    const targetEl = document.getElementById('seccion-revision');
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 }
 
 // ====================================================================

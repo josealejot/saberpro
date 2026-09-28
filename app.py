@@ -7,6 +7,7 @@ Apegado a las matrices de referencia y estándares oficiales del ICFES y MEN Col
 import json
 import os
 import sys
+import secrets
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 
@@ -15,6 +16,46 @@ app.secret_key = "saber5_isaias_tangarife_oficial_2026"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PREGUNTAS_FILE = os.path.join(BASE_DIR, "data", "preguntas.json")
+RESULTS_DIR = os.path.join(BASE_DIR, "data", "results")
+os.makedirs(RESULTS_DIR, exist_ok=True)
+
+# Almacén en servidor de resultados (en memoria y disco para compatibilidad con gunicorn en Render)
+RESULTADOS_STORE = {}
+
+def guardar_resultado(res_id, data):
+    RESULTADOS_STORE[res_id] = data
+    RESULTADOS_STORE["latest"] = data
+    try:
+        filepath = os.path.join(RESULTS_DIR, f"{res_id}.json")
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False)
+    except Exception as e:
+        pass
+
+def obtener_resultado(res_id):
+    if res_id and res_id in RESULTADOS_STORE:
+        return RESULTADOS_STORE[res_id]
+    if res_id:
+        filepath = os.path.join(RESULTS_DIR, f"{res_id}.json")
+        if os.path.exists(filepath):
+            try:
+                with open(filepath, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    RESULTADOS_STORE[res_id] = data
+                    return data
+            except Exception:
+                pass
+    if "latest" in RESULTADOS_STORE:
+        return RESULTADOS_STORE["latest"]
+    try:
+        files = [os.path.join(RESULTS_DIR, f) for f in os.listdir(RESULTS_DIR) if f.endswith(".json")]
+        if files:
+            files.sort(key=os.path.getmtime, reverse=True)
+            with open(files[0], "r", encoding="utf-8") as f:
+                return json.load(f)
+    except Exception:
+        pass
+    return None
 
 # Media nacional histórica estándar del ICFES en la escala 100-500
 MEDIA_NACIONAL_ICFES = 300
@@ -116,6 +157,64 @@ def obtener_nivel_desempeno(puntaje):
             "estado_meta": "Por Reforzar"
         }
 
+# Criterios oficiales de evaluación del Ministerio de Educación Nacional de Colombia (MEN - Decreto 1290 de 2009)
+PORCENTAJE_MINIMO_APROBATORIO_MEN = 60  # Umbral mínimo de aprobación nacional (60%)
+PUNTAJE_MINIMO_APROBATORIO_ICFES = 250   # 250 puntos (Nivel Mínimo / Desempeño Básico)
+
+def evaluar_resultado_men(porcentaje_aciertos, puntaje_icfes):
+    """
+    Evalúa si el estudiante aprueba o no el test según los estándares oficiales del Ministerio
+    de Educación Nacional de Colombia (MEN - Decreto 1290 de 2009) y los niveles ICFES Saber 5°.
+    
+    Escala Nacional de Desempeño MEN:
+    - Desempeño Superior: 90% a 100% (Puntaje ICFES 450-500) -> APROBADO CON EXCELENCIA
+    - Desempeño Alto: 75% a 89% (Puntaje ICFES 350-449) -> APROBADO CON ALTO DESEMPEÑO
+    - Desempeño Básico: 60% a 74% (Puntaje ICFES 250-349) -> APROBADO (MÍNIMO REQUERIDO POR EL MEN)
+    - Desempeño Bajo: 0% a 59% (Puntaje ICFES 100-249) -> NO APROBADO / REPROBADO (REQUIERE REFUERZO)
+    """
+    aprobado = (porcentaje_aciertos >= PORCENTAJE_MINIMO_APROBATORIO_MEN) or (puntaje_icfes >= PUNTAJE_MINIMO_APROBATORIO_ICFES)
+
+    if porcentaje_aciertos >= 90 or puntaje_icfes >= 450:
+        escala_men = "Desempeño Superior"
+        estado_texto = "¡Prueba Aprobada con Honores!"
+        badge_class = "badge-men-superior"
+        icono = "🏆"
+        color = "#10b981"
+        mensaje = "¡Extraordinario, Isaías! Has superado con maestría las competencias evaluadas, alcanzando el nivel Superior del Ministerio de Educación Nacional."
+    elif porcentaje_aciertos >= 75 or puntaje_icfes >= 350:
+        escala_men = "Desempeño Alto"
+        estado_texto = "¡Prueba Aprobada con Éxito!"
+        badge_class = "badge-men-alto"
+        icono = "⭐"
+        color = "#0284c7"
+        mensaje = "¡Muy bien hecho, Isaías! Demuestras un dominio sólido y sobresaliente de los aprendizajes exigidos para 5° de primaria."
+    elif aprobado:
+        escala_men = "Desempeño Básico"
+        estado_texto = "¡Prueba Aprobada!"
+        badge_class = "badge-men-basico"
+        icono = "🎉"
+        color = "#16a34a"
+        mensaje = "¡Felicitaciones, Isaías! Has alcanzado el porcentaje mínimo aprobatorio del MEN (60% / 250 puntos). Cumples con los aprendizajes básicos esperados."
+    else:
+        escala_men = "Desempeño Bajo"
+        estado_texto = "Prueba No Aprobada (Por Reforzar)"
+        badge_class = "badge-men-bajo"
+        icono = "⚠️"
+        color = "#ef4444"
+        mensaje = f"Isaías, según el estándar del Ministerio de Educación Nacional (Decreto 1290), se requiere al menos un {PORCENTAJE_MINIMO_APROBATORIO_MEN}% (o {PUNTAJE_MINIMO_APROBATORIO_ICFES} puntos ICFES) para aprobar la prueba. Tu resultado fue {porcentaje_aciertos}% ({puntaje_icfes} pts). ¡No te rindas! Esta prueba sirve para identificar tus fallas y reforzarlas antes del examen oficial."
+
+    return {
+        "aprobado": aprobado,
+        "escala_men": escala_men,
+        "estado_texto": estado_texto,
+        "porcentaje_minimo_exigido": PORCENTAJE_MINIMO_APROBATORIO_MEN,
+        "puntaje_minimo_exigido": PUNTAJE_MINIMO_APROBATORIO_ICFES,
+        "mensaje": mensaje,
+        "icono": icono,
+        "color": color,
+        "badge_class": badge_class
+    }
+
 @app.route("/")
 def index():
     """Pantalla inicial con opciones de simulacro real por sesiones o materias."""
@@ -171,23 +270,30 @@ def simulador():
             titulo_modo = "Sesión 2 Oficial ICFES: Ciencias Naturales y Competencias Ciudadanas"
             tiempo_sugerido_min = 45
         modo_codigo = f"sesion_{s_num}"
+        url_reintento = url_for("simulador", sesion=s_num)
     elif area_filtrada and area_filtrada in AREAS_INFO:
         preguntas = [p for p in todas if p.get("area") == area_filtrada]
         titulo_modo = f"Módulo de Entrenamiento: {area_filtrada}"
         tiempo_sugerido_min = 25
         modo_codigo = f"area_{area_filtrada}"
+        url_reintento = url_for("simulador", area=area_filtrada)
     else:
         preguntas = todas
         titulo_modo = "Simulacro General Oficial Saber 5° (4 Áreas)"
         tiempo_sugerido_min = 90
         modo_codigo = "completo"
+        url_reintento = url_for("simulador")
 
     if not preguntas:
         return redirect(url_for("index"))
 
+    preguntas_ids_str = ",".join([str(p["id"]) for p in preguntas])
+
     return render_template(
         "simulador.html",
         preguntas=preguntas,
+        preguntas_ids=preguntas_ids_str,
+        url_reintento=url_reintento,
         titulo_modo=titulo_modo,
         modo_codigo=modo_codigo,
         tiempo_sugerido_min=tiempo_sugerido_min,
@@ -197,36 +303,69 @@ def simulador():
 
 @app.route("/calificar", methods=["POST"])
 def calificar():
-    """Motor de calificación oficial del ICFES con desglose de competencias y componentes."""
+    """Motor de calificación oficial del ICFES y MEN con desglose de competencias y componentes."""
     todas_preguntas = cargar_preguntas()
-    mapa_preguntas = {p["id"]: p for p in todas_preguntas}
+    mapa_preguntas = {str(p["id"]): p for p in todas_preguntas}
 
     if request.is_json:
-        data = request.get_json()
+        data = request.get_json() or {}
         respuestas_usuario = data.get("respuestas", {})
         tiempo_segundos = data.get("tiempo", 0)
+        preguntas_ids_raw = data.get("preguntas_ids", "")
+        url_reintento = data.get("url_reintento", url_for("simulador"))
+        titulo_modo = data.get("titulo_modo", "Simulacro Saber 5°")
+        modo_codigo = data.get("modo_codigo", "completo")
     else:
         respuestas_usuario = {}
-        tiempo_segundos = int(request.form.get("tiempo_segundos", 0))
+        tiempo_segundos = int(request.form.get("tiempo_segundos", 0) or 0)
+        preguntas_ids_raw = request.form.get("preguntas_ids", "")
+        url_reintento = request.form.get("url_reintento") or url_for("simulador")
+        titulo_modo = request.form.get("titulo_modo") or "Simulacro Saber 5°"
+        modo_codigo = request.form.get("modo_codigo") or "completo"
+
         for key, value in request.form.items():
             if key.startswith("preg_"):
                 qid = key.replace("preg_", "")
                 respuestas_usuario[qid] = value
 
+    # Determinar qué preguntas pertenecían a la prueba presentada
+    if preguntas_ids_raw:
+        lista_ids = [q.strip() for q in preguntas_ids_raw.split(",") if q.strip()]
+        preguntas_evaluar = [mapa_preguntas[qid] for qid in lista_ids if qid in mapa_preguntas]
+    elif respuestas_usuario:
+        preguntas_evaluar = [mapa_preguntas[qid] for qid in respuestas_usuario if qid in mapa_preguntas]
+    else:
+        preguntas_evaluar = todas_preguntas
+
+    if not preguntas_evaluar:
+        preguntas_evaluar = todas_preguntas
+
     stats_areas = {}
     stats_componentes = {}
     detalle_preguntas = []
+    preguntas_falladas = []
+    preguntas_acertadas = []
 
-    for qid, p_info in mapa_preguntas.items():
-        # Procesar solo las preguntas que se encontraban en el formulario
-        if qid not in respuestas_usuario and f"preg_{qid}" not in request.form and not request.is_json:
-            continue
+    total_correctas = 0
+    total_incorrectas = 0
+    total_sin_responder = 0
 
+    for p_info in preguntas_evaluar:
+        qid = str(p_info["id"])
         resp_elegida = respuestas_usuario.get(qid, None)
-        es_correcta = (resp_elegida == p_info["respuesta_correcta"])
+        sin_responder = (resp_elegida is None or str(resp_elegida).strip() == "")
+        es_correcta = False if sin_responder else (str(resp_elegida).strip().upper() == str(p_info["respuesta_correcta"]).strip().upper())
+
         area = p_info["area"]
         componente = p_info.get("componente", "General")
         competencia = p_info.get("competencia", "General")
+
+        if es_correcta:
+            total_correctas += 1
+        else:
+            total_incorrectas += 1
+            if sin_responder:
+                total_sin_responder += 1
 
         # Stats por Área
         if area not in stats_areas:
@@ -243,7 +382,16 @@ def calificar():
         if es_correcta:
             stats_componentes[comp_key]["correctas"] += 1
 
-        detalle_preguntas.append({
+        # Textos de opciones
+        texto_elegida = ""
+        texto_correcta = ""
+        for opt in p_info.get("opciones", []):
+            if opt["key"] == resp_elegida:
+                texto_elegida = opt["texto"]
+            if opt["key"] == p_info["respuesta_correcta"]:
+                texto_correcta = opt["texto"]
+
+        item_pregunta = {
             "id": qid,
             "area": area,
             "componente": componente,
@@ -252,13 +400,19 @@ def calificar():
             "contexto": p_info.get("contexto", ""),
             "opciones": p_info["opciones"],
             "respuesta_elegida": resp_elegida,
+            "texto_elegida": texto_elegida,
             "respuesta_correcta": p_info["respuesta_correcta"],
+            "texto_correcta": texto_correcta,
             "es_correcta": es_correcta,
+            "sin_responder": sin_responder,
             "explicacion": p_info.get("explicacion", "")
-        })
+        }
 
-    if not stats_areas:
-        return redirect(url_for("index"))
+        detalle_preguntas.append(item_pregunta)
+        if es_correcta:
+            preguntas_acertadas.append(item_pregunta)
+        else:
+            preguntas_falladas.append(item_pregunta)
 
     # Calcular puntajes por área (escala 100-500)
     reporte_areas = []
@@ -296,8 +450,11 @@ def calificar():
             "porcentaje": pct
         })
 
-    puntaje_global = round(total_puntajes / len(reporte_areas)) if reporte_areas else 100
+    total_preguntas = len(preguntas_evaluar)
+    porcentaje_global = round((total_correctas / total_preguntas) * 100) if total_preguntas > 0 else 0
+    puntaje_global = calcular_puntaje_icfes(total_correctas, total_preguntas)
     nivel_global = obtener_nivel_desempeno(puntaje_global)
+    evaluacion_men = evaluar_resultado_men(porcentaje_global, puntaje_global)
     diferencia_global_media = puntaje_global - MEDIA_NACIONAL_ICFES
 
     mins = tiempo_segundos // 60
@@ -307,31 +464,52 @@ def calificar():
     fecha_examen = datetime.now().strftime("%d de %B de %Y - %I:%M %p")
     codigo_registro = f"AC-20265-ISAIAS-{datetime.now().strftime('%H%M%S')}"
 
-    session["resultado"] = {
+    resultado_id = f"res_{secrets.token_hex(8)}"
+    resultado_data = {
+        "id": resultado_id,
         "estudiante": "Isaías Tangarife",
         "codigo_registro": codigo_registro,
         "fecha_examen": fecha_examen,
+        "titulo_modo": titulo_modo,
+        "modo_codigo": modo_codigo,
+        "url_reintento": url_reintento,
         "puntaje_global": puntaje_global,
         "media_nacional": MEDIA_NACIONAL_ICFES,
         "diferencia_global_media": diferencia_global_media,
         "nivel_global": nivel_global,
+        "evaluacion_men": evaluacion_men,
+        "aprobado": evaluacion_men["aprobado"],
+        "porcentaje_global": porcentaje_global,
+        "total_preguntas": total_preguntas,
+        "total_correctas": total_correctas,
+        "total_incorrectas": total_incorrectas,
+        "total_sin_responder": total_sin_responder,
         "reporte_areas": reporte_areas,
         "reporte_componentes": reporte_componentes,
         "detalle_preguntas": detalle_preguntas,
-        "tiempo_formateado": tiempo_formateado,
-        "total_preguntas": sum(a["total"] for a in reporte_areas),
-        "total_correctas": sum(a["correctas"] for a in reporte_areas)
+        "preguntas_falladas": preguntas_falladas,
+        "preguntas_acertadas": preguntas_acertadas,
+        "tiempo_formateado": tiempo_formateado
     }
 
-    if request.is_json:
-        return jsonify({"status": "ok", "redirect": url_for("resultados")})
+    # Guardar en almacén del servidor (memoria y disco para Render y gunicorn)
+    guardar_resultado(resultado_id, resultado_data)
+    session["resultado_id"] = resultado_id
 
-    return redirect(url_for("resultados"))
+    if request.is_json:
+        return jsonify({"status": "ok", "redirect": url_for("resultados", id=resultado_id)})
+
+    return redirect(url_for("resultados", id=resultado_id))
 
 @app.route("/resultados")
 def resultados():
     """Boletín Oficial de Resultados ICFES para Isaías."""
-    resultado = session.get("resultado")
+    res_id = request.args.get("id") or session.get("resultado_id") or "latest"
+    resultado = obtener_resultado(res_id)
+
+    if not resultado:
+        resultado = session.get("resultado")
+
     if not resultado:
         return redirect(url_for("index"))
 
@@ -364,5 +542,5 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     print(f"[OK] Servidor Oficial Saber 5 iniciado con exito en puerto {port}.")
     print(f"[URL] Abre en tu navegador: http://127.0.0.1:{port}")
-    app.run(debug=False, use_reloader=False, host="0.0.0.0", port=port)
+    app.run(debug=True, use_reloader=True, host="0.0.0.0", port=port)
 

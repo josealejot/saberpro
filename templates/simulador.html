@@ -12,12 +12,17 @@
       <h1 class="test-title">{{ titulo_modo }}</h1>
     </div>
 
-    <div class="timer-card">
-      <span class="timer-icon">⏱️</span>
-      <div class="timer-display">
-        <span class="timer-label">Tiempo</span>
-        <span id="timer-text" class="timer-value">00:00</span>
+    <div class="test-header-actions">
+      <div class="timer-card">
+        <span class="timer-icon">⏱️</span>
+        <div class="timer-display">
+          <span class="timer-label">Tiempo</span>
+          <span id="timer-text" class="timer-value">00:00</span>
+        </div>
       </div>
+      <button type="button" id="btn-finish-quick" class="btn btn-success btn-finish-quick" title="Entregar examen y ver resultados">
+        🏁 Entregar Prueba
+      </button>
     </div>
   </div>
 
@@ -47,6 +52,10 @@
   <!-- Formulario de Preguntas -->
   <form id="form-simulador" action="{{ url_for('calificar') }}" method="POST">
     <input type="hidden" name="tiempo_segundos" id="input-tiempo-segundos" value="0">
+    <input type="hidden" name="modo_codigo" value="{{ modo_codigo }}">
+    <input type="hidden" name="titulo_modo" value="{{ titulo_modo }}">
+    <input type="hidden" name="url_reintento" value="{{ url_reintento }}">
+    <input type="hidden" name="preguntas_ids" value="{{ preguntas_ids }}">
 
     {% for p in preguntas %}
     <div class="question-card {% if loop.first %}current-question{% else %}hidden-question{% endif %}" id="qcard-{{ loop.index0 }}" data-qid="{{ p.id }}">
